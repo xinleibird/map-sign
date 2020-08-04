@@ -1,0 +1,8 @@
+{
+  "extends": ["alloy", "alloy/typescript"],
+  "env": {},
+  "globals": {},
+  "rules": {
+    "max-params": 0
+  }
+}

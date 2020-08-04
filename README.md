@@ -4,10 +4,10 @@ Full stack application to set / list signs in a Map.
 
 TODO
 
-- [ ] Setup Server
-  - [ ] Install Dependencies / Linter / Prettier ...whatever
-  - [ ] Setup Express
-  - [ ] Setup Express Middlewares (404 / Error...)
+- [x] Setup Server
+  - [x] Install Dependencies / Linter / Prettier ...whatever
+  - [x] Setup Express
+  - [x] Setup Express Middlewares (404 / Error...)
 - [ ] Model DB
   - [ ] Think about what will store
 - [ ] Setup Mongoose
