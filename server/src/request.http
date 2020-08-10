@@ -1,0 +1,17 @@
+GET http://localhost:1717/api/signs HTTP/1.1
+
+###
+
+POST http://localhost:1717/api/signs HTTP/1.1
+content-type: application/json
+
+{
+    "title": "hello",
+    "location": {
+        "type": "Point",
+        "coordinates": [100, 20]
+    }
+}
+
+###
+GET http://localhost:1717/api/signs/5f30986bd4a5f841801f3bec HTTP/1.1

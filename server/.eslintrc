@@ -3,6 +3,13 @@
   "env": {},
   "globals": {},
   "rules": {
-    "max-params": 0
+    "max-params": 0,
+    "@typescript-eslint/consistent-type-assertions": [
+      "error",
+      {
+        "assertionStyle": "as",
+        "objectLiteralTypeAssertions": "allow-as-parameter"
+      }
+    ]
   }
 }
