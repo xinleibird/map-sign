@@ -23,7 +23,7 @@ TODO
   - Create a new sign entry
 - [x] GET / signs
   - List all signs
-- [ ] Setup Client
-- [ ] With Form to add a new sign entry
-- [ ] Setup Map SDK on client
-- [ ] List all signs on the Map
+- [x] Setup Client
+  - [x] With Form to add a new sign entry
+  - [x] Setup Map SDK on client
+  - [x] List all signs on the Map

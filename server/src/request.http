@@ -2,6 +2,14 @@ GET http://localhost:1717/api/signs HTTP/1.1
 
 ###
 
+GET http://localhost:1717/api/signs/adaba HTTP/1.1
+
+###
+
+DELETE http://localhost:1717/api/signs/adaba HTTP/1.1
+
+###
+
 POST http://localhost:1717/api/signs HTTP/1.1
 content-type: application/json
 
@@ -9,9 +17,15 @@ content-type: application/json
     "title": "hello",
     "location": {
         "type": "Point",
-        "coordinates": [100, 20]
+        "coordinates": [108.367287, 22.81669]
     }
 }
 
 ###
+
 GET http://localhost:1717/api/signs/5f30986bd4a5f841801f3bec HTTP/1.1
+
+
+###
+
+GET https://geo.datav.aliyun.com/areas_v2/bound/450000.json HTTP/1.1
