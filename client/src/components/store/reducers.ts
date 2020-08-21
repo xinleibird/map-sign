@@ -24,7 +24,7 @@ export const signs = (
   switch (action.type) {
     case ACTION_TYPE.INIT_ENTRIES:
       return {
-        entries: [...action.entries],
+        entries: action.entries ? [...action.entries] : [],
         openedTips: state.openedTips,
         addedCoordinates: state.addedCoordinates,
       };

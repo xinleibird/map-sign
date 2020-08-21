@@ -23,13 +23,14 @@
     "typescript": "~3.7.2",
     "uuid": "^8.3.0"
   },
+  "homepage": "https://xinleibird.github.io/map-sign",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "clean": "rimraf build",
-    "deploy": "gh-pages -d build -r https://github.com/xinleibird/map-sign.git",
+    "deploy": "gh-pages -d build",
     "push": "npm run clean && npm run build && npm run deploy"
   },
   "eslintConfig": {
