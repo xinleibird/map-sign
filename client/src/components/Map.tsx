@@ -86,7 +86,7 @@ const Map = () => {
       width="100vw"
       height="100vh"
       {...viewport}
-      mapStyle="mapbox://styles/xinleibird/cke3vf72u0kwo19o8kquxfyom"
+      mapStyle={process.env.REACT_APP_MAP_STYLE}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN} // edit it at .env file in *client* root directory.
       doubleClickZoom={false}
       onDblClick={handleAddEntry}
