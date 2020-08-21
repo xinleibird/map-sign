@@ -26,7 +26,8 @@ export const addMapSignToDB = async (param: ISignEntry) => {
 
 export const getAtlas = async () => {
   try {
-    const atlas = await fetch('https://geo.datav.aliyun.com/areas_v2/bound/450100.json');
+    const atlas = await fetch('https://geo.datav.aliyun.com/areas_v2/bound/450000.json');
+
     return atlas.json();
   } catch (error) {
     console.error(error.message);

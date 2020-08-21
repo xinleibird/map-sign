@@ -2,8 +2,8 @@ import React, { FC, useCallback, useMemo } from 'react';
 import { Popup, PopupProps } from 'react-map-gl';
 import { useDispatch } from 'react-redux';
 import { ISignEntry } from '../types';
-import { setOpenedTip } from './store/actions';
 import styles from './Map.module.css';
+import { setOpenedTip } from './store/actions';
 
 interface ITipProps {
   signEntry: ISignEntry;
@@ -31,6 +31,7 @@ const Tip: FC<Partial<PopupProps> & ITipProps> = ({ signEntry, children, ...args
         closeButton={true}
         closeOnClick={false}
         anchor="top"
+        captureScroll={true}
         sortByDepth={true}
         onClose={() => {
           handleSetOpendTip({ [_id!]: false });

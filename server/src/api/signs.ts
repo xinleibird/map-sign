@@ -2,12 +2,21 @@ import { Router } from 'express';
 import mongoose from 'mongoose';
 import { MapSign } from '../models/SignEntry';
 
+import ExpressBrute from 'express-brute';
+import MongoStore from 'express-brute-mongoose';
+import BruteForceSchema from 'express-brute-mongoose/dist/schema';
+
 const router = Router();
 
 mongoose.connect(process.env.DB_URL || 'mongodb://localhost/test', {
   useUnifiedTopology: true,
   useNewUrlParser: true,
+  useCreateIndex: true,
 });
+
+const model = mongoose.model('bruteforce', new mongoose.Schema(BruteForceSchema));
+const store = new MongoStore(model);
+const bruteforce = new ExpressBrute(store, { minWait: 5000 });
 
 router.get('/signs/:id', async (req, res, next) => {
   try {
@@ -72,7 +81,7 @@ router.get('/signs', async (req, res, next) => {
   }
 });
 
-router.post('/signs', async (req, res, next) => {
+router.post('/signs', bruteforce.prevent, async (req, res, next) => {
   try {
     const mapSign = new MapSign(req.body);
 

@@ -15,6 +15,7 @@ content-type: application/json
 
 {
     "title": "hello",
+    "rating": 1,
     "location": {
         "type": "Point",
         "coordinates": [108.367287, 22.81669]
