@@ -30,3 +30,6 @@ GET http://localhost:20080/api/signs/5f30986bd4a5f841801f3bec HTTP/1.1
 ###
 
 GET https://geo.datav.aliyun.com/areas_v2/bound/450000.json HTTP/1.1
+
+###
+GET http://localhost:20080/oauth/redirect HTTP/1.1

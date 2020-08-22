@@ -17,6 +17,7 @@ import Sign from './Sign';
 import { initEntries, updateAddedLocation } from './store/actions';
 import reducers from './store/reducers';
 import Tip from './Tip';
+import avatar from './avatar.png';
 
 const Map = () => {
   const [viewport, setViewport] = useState<Partial<ViewportProps>>({
@@ -26,6 +27,8 @@ const Map = () => {
     maxZoom: 15,
     minZoom: 2,
   });
+
+  const { zoom } = viewport;
 
   const dispatch = useDispatch();
 
@@ -79,7 +82,6 @@ const Map = () => {
     setViewport(viewState);
   }, []);
 
-  const { zoom } = viewport;
   return (
     <ReactMapGL
       ref={currentMapInstance}
@@ -91,9 +93,51 @@ const Map = () => {
       doubleClickZoom={false}
       onDblClick={handleAddEntry}
       onViewStateChange={handleVisiable}
+      attributionControl={false}
     >
-      <div style={{ position: 'absolute', left: 10, top: 10 }}>
+      <div style={{ position: 'absolute', right: 12, top: 12 }}>
+        <button
+          title="github repo"
+          style={{
+            width: 32,
+            height: 32,
+            padding: 0,
+            background: '#fff',
+            border: 0,
+            borderRadius: 20,
+            outline: 0,
+            fontSize: '0.75rem',
+          }}
+        >
+          <a
+            href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_OAUTH_CLIENT_ID}&redirect_uri=https://xinleibird.me:20443/oauth/redirect`}
+            style={{ textDecoration: 'none', fontSize: '0.75rem' }}
+          >
+            登录
+          </a>
+        </button>
+      </div>
+      <div style={{ position: 'absolute', left: 12, top: 12 }}>
         <NavigationControl showCompass={true} />
+      </div>
+
+      <div style={{ position: 'absolute', right: 12, bottom: 12 }}>
+        <button
+          title="github repo"
+          style={{
+            width: 32,
+            height: 32,
+            padding: 0,
+            background: '#fff',
+            border: 0,
+            borderRadius: 20,
+            outline: 0,
+          }}
+        >
+          <a href="https://github.com/xinleibird/map-sign" target="blank">
+            <img style={{ width: 32 }} src={avatar} alt="repo" draggable={false} />
+          </a>
+        </button>
       </div>
 
       {visibleEntries.map((entry) => {

@@ -8,6 +8,7 @@ import api from './api';
 import { handleErrors, notFound } from './middleware';
 import http from 'http';
 import https from 'https';
+import oauth from './oauth';
 
 if (process.env.NODE_ENV === 'development') {
   dotenv.config({ path: './.development' });
@@ -25,7 +26,7 @@ const corsOptions: CorsOptions = {
 // Request logs, Header security and CORS
 app.use(morgan('common')).use(helmet()).use(cors(corsOptions)).use(express.json());
 
-app.use('/api', api);
+app.use('/api', api).use('/oauth', oauth);
 
 // 404 and Error handler
 app.use(notFound).use(handleErrors);
