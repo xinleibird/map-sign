@@ -5,6 +5,13 @@ import { MapSign } from '../models/SignEntry';
 import ExpressBrute from 'express-brute';
 import MongoStore from 'express-brute-mongoose';
 import BruteForceSchema from 'express-brute-mongoose/dist/schema';
+import dotenv from 'dotenv';
+
+if (process.env.NODE_ENV === 'development') {
+  dotenv.config({ path: './.development' });
+} else {
+  dotenv.config();
+}
 
 const router = Router();
 
