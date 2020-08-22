@@ -17,15 +17,16 @@ router.get('/redirect', async (req, res, next) => {
     });
     const responseToken = await responseTokenPromise.json();
 
-    const accessToken = responseToken.data.access_token;
+    const accessToken = responseToken.data;
+    console.log(accessToken);
 
-    const result = await fetch('https://api.github.com/user', {
-      headers: {
-        accept: 'application/json',
-        Authorization: `token ${accessToken}`,
-      },
-    });
-    console.log(result);
+    // const result = await fetch('https://api.github.com/user', {
+    //   headers: {
+    //     accept: 'application/json',
+    //     Authorization: `token ${accessToken}`,
+    //   },
+    // });
+    // console.log(result);
   } catch (e) {
     next(e);
   }
