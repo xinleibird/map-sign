@@ -37,12 +37,13 @@ if (process.env.NODE_ENV === 'development') {
     console.log(`Server has been started at http://localhost:${port}`);
   });
 } else {
-  const privateKey = readFileSync(process.env.PRIVATE_KEY_PATH, 'utf8');
-  const certificate = readFileSync(process.env.CERTIFICATE_PATH, 'utf8');
+  const key = readFileSync(process.env.KEY_PATH, 'utf8');
+  const cert = readFileSync(process.env.CERT_PATH, 'utf8');
+  const ca = readFileSync(process.env.CHAIN_PATH, 'utf8');
   const credentials = {
-    key: privateKey,
-    cert: certificate,
-    ca: certificate,
+    key,
+    cert,
+    ca,
   };
   const httpsServer = https.createServer(credentials, app);
   const port = process.env.HTTPS_PORT;
