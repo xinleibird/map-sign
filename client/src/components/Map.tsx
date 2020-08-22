@@ -110,7 +110,7 @@ const Map = () => {
           }}
         >
           <a
-            href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_OAUTH_CLIENT_ID}&redirect_uri=https://xinleibird.me:20443/oauth/redirect`}
+            href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_OAUTH_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_API_URL}/oauth/redirect`}
             style={{ textDecoration: 'none', fontSize: '0.75rem' }}
           >
             登录
