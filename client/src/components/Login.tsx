@@ -2,6 +2,7 @@ import { Button, Card, Link, useClickAway, User } from '@zeit-ui/react';
 import { User as UserIcon } from '@zeit-ui/react-icons';
 import React, { useMemo, useRef, useState } from 'react';
 import avatarImage from './res/avatar.png';
+import githubPng from './res/github.png';
 import userSVG from './res/user.svg';
 
 const Login = ({ isLogin }: { isLogin: boolean }) => {
@@ -12,7 +13,7 @@ const Login = ({ isLogin }: { isLogin: boolean }) => {
     setShowCard(!showCard);
   });
 
-  const loginCard = useMemo(() => {
+  const hasLoginCard = useMemo(() => {
     return (
       <div ref={ref}>
         <Card>
@@ -24,21 +25,28 @@ const Login = ({ isLogin }: { isLogin: boolean }) => {
     );
   }, []);
 
-  const logoutCard = useMemo(() => {
+  const notLoginCard = useMemo(() => {
     return (
       <div ref={ref}>
         <Link
           href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_OAUTH_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_SERVER_URL}/oauth/redirect`}
         >
           <Card>
-            <User src={userSVG} name="点击登录"></User>
+            <User src={userSVG} name="请先登录">
+              github
+              <img
+                src={githubPng}
+                alt="github"
+                style={{ width: '12px', marginLeft: '10px' }}
+              />
+            </User>
           </Card>
         </Link>
       </div>
     );
   }, []);
 
-  const loginButton = useMemo(() => {
+  const hasLoginButton = useMemo(() => {
     return (
       <Button
         style={{ paddingLeft: '15px', paddingRight: '15px' }}
@@ -52,7 +60,7 @@ const Login = ({ isLogin }: { isLogin: boolean }) => {
     );
   }, []);
 
-  const logoutButton = useMemo(() => {
+  const notLoginButton = useMemo(() => {
     return (
       <Button
         style={{ paddingLeft: '15px', paddingRight: '15px' }}
@@ -66,9 +74,9 @@ const Login = ({ isLogin }: { isLogin: boolean }) => {
   }, []);
 
   if (isLogin) {
-    return showCard ? loginCard : loginButton;
+    return showCard ? hasLoginCard : hasLoginButton;
   } else {
-    return showCard ? logoutCard : logoutButton;
+    return showCard ? notLoginCard : notLoginButton;
   }
 };
 

@@ -1,4 +1,4 @@
-import { Avatar, Grid, Link, Spacer, Tooltip } from '@zeit-ui/react';
+import { Avatar, Grid, Link, Spacer, Tooltip, Modal, useModal } from '@zeit-ui/react';
 import 'element-theme-default';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
@@ -32,7 +32,9 @@ const Map = () => {
     minZoom: 2,
   });
 
-  const [isLogin, setLogin] = useState(false);
+  const [hasLogin, setLogin] = useState(false);
+
+  const { setVisible: setLoginModalVisiable, bindings: modalBindings } = useModal();
 
   const { zoom } = viewport;
 
@@ -67,9 +69,13 @@ const Map = () => {
 
   const handleAddEntry = useCallback(
     (e: PointerEvent) => {
-      dispatch(updateAddedLocation(e.lngLat));
+      if (hasLogin) {
+        dispatch(updateAddedLocation(e.lngLat));
+      } else {
+        setLoginModalVisiable(true);
+      }
     },
-    [dispatch]
+    [dispatch, hasLogin, setLoginModalVisiable]
   );
 
   const handleDragAddEntry = useCallback(
@@ -114,31 +120,37 @@ const Map = () => {
               </Link>
               <Spacer y={1} />
               <Link href="https://github.com/xinleibird">
-                <Tooltip text="关于我" placement="right">
+                <Tooltip text="关于作者" placement="right">
                   <Avatar src={avatarImage} size="small" />
                 </Tooltip>
               </Link>
             </div>
           </Grid>
           <Grid>
-            <Login isLogin={isLogin} />
-            {/* {isLogin ? (
-              <Card>
-                <User src={avatarImage} name="辛磊">
-                  <User.Link href="https://github.com/xinleibird">@xinleibird</User.Link>
-                </User>
-              </Card>
-            ) : (
-              <Link
-                href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_OAUTH_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_SERVER_URL}/oauth/redirect`}
-              >
-                <Card>
-                  <User src={userSVG} name="点击登录"></User>
-                </Card>
-              </Link>
-            )} */}
+            <Login isLogin={hasLogin} />
           </Grid>
         </Grid.Container>
+
+        <Modal {...modalBindings}>
+          <Modal.Title>请先登录</Modal.Title>
+          <Modal.Subtitle>添加标记需要登录</Modal.Subtitle>
+          <Modal.Content>
+            <p>
+              为保证安全性，需要使用 Github
+              账户对本站授权，本站不保存您的各种敏感信息，请放心使用。
+            </p>
+          </Modal.Content>
+          <Modal.Action passive onClick={({ close }) => close()}>
+            放弃使用
+          </Modal.Action>
+          <Modal.Action
+            onClick={() => {
+              window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_OAUTH_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_SERVER_URL}/oauth/redirect`;
+            }}
+          >
+            去 Github 授权
+          </Modal.Action>
+        </Modal>
 
         {visibleEntries.map((entry) => {
           const { _id } = entry;
