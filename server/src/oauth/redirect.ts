@@ -1,28 +1,23 @@
-import { Router } from 'express';
 import axios from 'axios';
-import dotenv from 'dotenv';
-
-if (process.env.NODE_ENV === 'development') {
-  dotenv.config({ path: './.development' });
-} else {
-  dotenv.config();
-}
+import { Router } from 'express';
+import env from '../env';
+env();
 
 const router = Router();
-
-
 
 router.get('/redirect', async (req, res, next) => {
   try {
     const requestToken = req.query.code;
-    let githubAccessURL =
-    'https://github.com/login/oauth/access_token?' +
-    `client_id=${process.env.GITHUB_CLIENT_ID}&` +
-    `client_secret=${process.env.GITHUB_CLIENT_SECRET}&` +
-    `code=${requestToken}`;
+    const githubAccessURL = 'https://github.com/login/oauth/access_token';
     const responseToken = await axios({
+      method: 'POST',
       url: githubAccessURL,
       headers: { accept: 'application/json' },
+      data: {
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        code: requestToken,
+      },
     });
 
     const accessToken = responseToken.data.access_token;
@@ -30,10 +25,10 @@ router.get('/redirect', async (req, res, next) => {
     const result = await axios({
       url: 'https://api.github.com/user',
       headers: {
-         accept: 'application/json',
-         Authorization: `token ${accessToken}`,
-       },
-     });
+        accept: 'application/json',
+        Authorization: `token ${accessToken}`,
+      },
+    });
     console.log(result.data);
   } catch (e) {
     next(e);

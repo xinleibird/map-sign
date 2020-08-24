@@ -2,7 +2,7 @@ import { ISignEntry } from '../types';
 
 export const listMapSignsFromDB = async () => {
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/signs`);
+    const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/signs`);
     return res.json();
   } catch (error) {
     console.error(error.message);
@@ -11,7 +11,7 @@ export const listMapSignsFromDB = async () => {
 
 export const addMapSignToDB = async (param: ISignEntry) => {
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/signs`, {
+    const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/signs`, {
       method: 'POST',
       body: JSON.stringify(param),
       headers: {

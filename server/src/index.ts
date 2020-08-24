@@ -1,20 +1,16 @@
 import cors, { CorsOptions } from 'cors';
-import dotenv from 'dotenv';
 import express from 'express';
 import { readFileSync } from 'fs';
 import helmet from 'helmet';
-import morgan from 'morgan';
-import api from './api';
-import { handleErrors, notFound } from './middleware';
 import http from 'http';
 import https from 'https';
+import morgan from 'morgan';
+import api from './api';
+import env from './env';
+import { handleErrors, notFound } from './middleware';
 import oauth from './oauth';
 
-if (process.env.NODE_ENV === 'development') {
-  dotenv.config({ path: './.development' });
-} else {
-  dotenv.config();
-}
+env();
 
 const app = express();
 

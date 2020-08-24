@@ -1,17 +1,12 @@
 import { Router } from 'express';
-import mongoose from 'mongoose';
-import { MapSign } from '../models/SignEntry';
-
 import ExpressBrute from 'express-brute';
 import MongoStore from 'express-brute-mongoose';
 import BruteForceSchema from 'express-brute-mongoose/dist/schema';
-import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import env from '../env';
+import { MapSign } from '../models/SignEntry';
 
-if (process.env.NODE_ENV === 'development') {
-  dotenv.config({ path: './.development' });
-} else {
-  dotenv.config();
-}
+env();
 
 const router = Router();
 
