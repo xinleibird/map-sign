@@ -1,0 +1,9 @@
+HTTP_PORT=20080
+# HTTPS_PORT=
+DB_URL=mongodb://localhost/test
+CORS_ORIGIN=["http://localhost:3000", "http://127.0.0.1:3000"]
+# KEY_PATH=
+# CERT_PATH=
+# CHAIN_PATH=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
