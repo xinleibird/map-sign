@@ -1,10 +1,8 @@
-import React, { useMemo, useState, useRef } from 'react';
-import userSVG from './res/user.svg';
-
+import { Button, Card, Link, useClickAway, User } from '@zeit-ui/react';
+import { User as UserIcon } from '@zeit-ui/react-icons';
+import React, { useMemo, useRef, useState } from 'react';
 import avatarImage from './res/avatar.png';
-
-import { Card, User, Link, Button, useClickAway } from '@zeit-ui/react';
-import Icon, { LogIn, LogOut, User as UserIcon } from '@zeit-ui/react-icons';
+import userSVG from './res/user.svg';
 
 const Login = ({ isLogin }: { isLogin: boolean }) => {
   const [showCard, setShowCard] = useState(false);

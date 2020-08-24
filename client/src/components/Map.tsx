@@ -1,4 +1,4 @@
-import { Avatar, Card, Grid, Spacer, Tooltip, User, Link } from '@zeit-ui/react';
+import { Avatar, Grid, Link, Spacer, Tooltip } from '@zeit-ui/react';
 import 'element-theme-default';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
@@ -14,15 +14,14 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { v5 as uuid } from 'uuid';
 import { ICoordinates, ILocation, IOpenedTips, ISignEntry } from '../types';
+import Login from './Login';
 import MapSignForm from './MapSignForm';
 import avatarImage from './res/avatar.png';
+import githubSVG from './res/github.png';
 import Sign from './Sign';
 import { initEntries, updateAddedLocation } from './store/actions';
 import reducers from './store/reducers';
 import Tip from './Tip';
-import githubSVG from './res/github.png';
-import userSVG from './res/user.svg';
-import Login from './Login';
 
 const Map = () => {
   const [viewport, setViewport] = useState<Partial<ViewportProps>>({
