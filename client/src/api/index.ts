@@ -6,6 +6,7 @@ export const listMapSignsFromDB = async () => {
     return res.json();
   } catch (error) {
     console.error(error.message);
+    return { message: 'error' };
   }
 };
 
@@ -21,6 +22,7 @@ export const addMapSignToDB = async (param: ISignEntry) => {
     return res.json();
   } catch (error) {
     console.error(error.message);
+    return { message: 'error' };
   }
 };
 

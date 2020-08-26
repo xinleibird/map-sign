@@ -1,11 +1,11 @@
 import { Button, Card, Link, useClickAway, User } from '@zeit-ui/react';
 import { User as UserIcon } from '@zeit-ui/react-icons';
 import React, { useMemo, useRef, useState } from 'react';
-import avatarImage from './res/avatar.png';
 import githubPng from './res/github.png';
 import userSVG from './res/user.svg';
+import { useSelector, RootStateOrAny } from 'react-redux';
 
-const Login = ({ isLogin }: { isLogin: boolean }) => {
+const Login = () => {
   const [showCard, setShowCard] = useState(false);
 
   const ref = useRef(null as any);
@@ -13,17 +13,32 @@ const Login = ({ isLogin }: { isLogin: boolean }) => {
     setShowCard(!showCard);
   });
 
+  const userInfo = useSelector(
+    (
+      state: RootStateOrAny & {
+        login: string;
+        avatar_url: string;
+        name: string;
+        html_url: string;
+      }
+    ) => {
+      return state.app.userInfo;
+    }
+  );
+
+  const { login, avatar_url, name, html_url } = userInfo;
+
   const hasLoginCard = useMemo(() => {
     return (
       <div ref={ref}>
         <Card>
-          <User src={avatarImage} name="辛磊">
-            <User.Link href="https://github.com/xinleibird">@xinleibird</User.Link>
+          <User src={avatar_url} name={name}>
+            <User.Link href={html_url}>{login}</User.Link>
           </User>
         </Card>
       </div>
     );
-  }, []);
+  }, [avatar_url, html_url, login, name]);
 
   const notLoginCard = useMemo(() => {
     return (
@@ -55,10 +70,10 @@ const Login = ({ isLogin }: { isLogin: boolean }) => {
           setShowCard(true);
         }}
       >
-        <img src={avatarImage} alt="user" style={{ width: '24px', paddingTop: '8px' }} />
+        <img src={avatar_url} alt="user" style={{ width: '24px', paddingTop: '8px' }} />
       </Button>
     );
-  }, []);
+  }, [avatar_url]);
 
   const notLoginButton = useMemo(() => {
     return (
@@ -73,7 +88,7 @@ const Login = ({ isLogin }: { isLogin: boolean }) => {
     );
   }, []);
 
-  if (isLogin) {
+  if (!!login) {
     return showCard ? hasLoginCard : hasLoginButton;
   } else {
     return showCard ? notLoginCard : notLoginButton;

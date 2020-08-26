@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import redirect from './redirect';
+
+import signs from './signs';
 
 const router = Router();
 
-router.use(redirect);
+router.use('/api', signs);
 
 export default router;

@@ -11,9 +11,11 @@
     "dotenv": "^8.2.0",
     "element-theme-default": "^1.4.13",
     "immutable": "^4.0.0-rc.12",
+    "js-cookie": "^2.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.4.1",
+    "react-loading": "^2.0.3",
     "react-map-gl": "^5.2.7",
     "react-redux": "^7.2.1",
     "react-scripts": "3.4.1",
@@ -49,13 +51,14 @@
   "devDependencies": {
     "@types/immutable": "^3.8.7",
     "@types/jest": "^24.0.0",
+    "@types/js-cookie": "^2.2.6",
     "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-map-gl": "^5.2.7",
     "@types/react-redux": "^7.1.9",
-    "@types/react": "^16.9.0",
-    "@types/redux-thunk": "^2.1.0",
     "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
     "@types/uuid": "^8.3.0",
     "gh-pages": "^3.1.0"
   }

@@ -1,5 +1,5 @@
 import { Button, Card, Input, Spacer, Text, Textarea } from '@zeit-ui/react';
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { ISignEntry } from '../types';
@@ -13,6 +13,10 @@ const MapSignForm: FC<Partial<ISignEntry> & { editing?: boolean }> = ({
 }) => {
   const dispatch = useDispatch();
   const { handleSubmit, register, errors } = useForm({ mode: 'onChange' });
+
+  const handleClickClose = useCallback(() => {
+    dispatch(updateAddedLocation(null));
+  }, [dispatch]);
 
   return (
     <form
@@ -31,6 +35,11 @@ const MapSignForm: FC<Partial<ISignEntry> & { editing?: boolean }> = ({
       })}
     >
       <Card width="300px">
+        <div style={{ textAlign: 'right' }}>
+          <Button size="mini" type="error" auto onClick={handleClickClose}>
+            X
+          </Button>
+        </div>
         <Card.Content style={{ width: '260px' }}>
           <div style={{ textAlign: 'center' }}>
             <Text h3>添加标记</Text>

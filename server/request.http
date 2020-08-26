@@ -18,7 +18,7 @@ content-type: application/json
     "rating": 1,
     "location": {
         "type": "Point",
-        "coordinates": [108.367287, 22.81669]
+        "coordinates": [103.367287, 21.81669]
     }
 }
 

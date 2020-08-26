@@ -9,20 +9,37 @@ export enum ACTION_TYPE {
   UPDATE_ENTRY,
   SET_OPENED_TIP,
   UPDATE_ADDED_LOCATION,
+  SET_APP_INIT_LOADING,
+  SET_APP_ALERT,
+  SET_APP_USER_INFO,
 }
 
 export const initEntries = () => {
   return async (dispatch: Dispatch) => {
-    const entries = await listMapSignsFromDB();
-    dispatch({ type: ACTION_TYPE.INIT_ENTRIES, entries });
+    const res = await listMapSignsFromDB();
+
+    if (res.message === 'ok') {
+      const { result } = res;
+      dispatch({ type: ACTION_TYPE.INIT_ENTRIES, entries: result, initFinish: true });
+      dispatch({ type: ACTION_TYPE.SET_APP_INIT_LOADING, isLoading: false });
+    } else if (res.message === 'too many request') {
+      dispatch({ type: ACTION_TYPE.SET_APP_ALERT, alert: '页面刷新太频繁了！请稍后重试' });
+    } else {
+      console.error(res.message);
+    }
   };
 };
 
 export const addEntry = (sign: ISignEntry) => {
   return async (dispatch: Dispatch) => {
-    const entry = await addMapSignToDB(sign);
+    const res = await addMapSignToDB(sign);
 
-    dispatch({ type: ACTION_TYPE.ADD_ENTRY, entry });
+    if (res.message === 'ok') {
+      const { result } = res;
+      dispatch({ type: ACTION_TYPE.ADD_ENTRY, entry: result });
+    } else {
+      console.error(res.message);
+    }
   };
 };
 
@@ -39,5 +56,33 @@ export const updateAddedLocation = (coordinates: ICoordinates | null) => {
   return {
     type: ACTION_TYPE.UPDATE_ADDED_LOCATION,
     coordinates: coordinates || [],
+  };
+};
+
+//
+
+export const setAppInitLoading = (isLoading: boolean) => {
+  return {
+    type: ACTION_TYPE.SET_APP_INIT_LOADING,
+    isLoading,
+  };
+};
+
+export const setAppAlert = (alert: string) => {
+  return {
+    type: ACTION_TYPE.SET_APP_ALERT,
+    alert,
+  };
+};
+
+export const setAppUserInfo = (userInfo: {
+  login: string;
+  avatar_url: string;
+  name: string;
+  html_url: string;
+}) => {
+  return {
+    type: ACTION_TYPE.SET_APP_USER_INFO,
+    userInfo,
   };
 };

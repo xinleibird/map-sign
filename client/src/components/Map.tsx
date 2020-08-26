@@ -1,4 +1,4 @@
-import { Avatar, Grid, Link, Spacer, Tooltip, Modal, useModal } from '@zeit-ui/react';
+import { Avatar, Grid, Link, Modal, Spacer, Tooltip, useModal } from '@zeit-ui/react';
 import 'element-theme-default';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
@@ -14,14 +14,17 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { v5 as uuid } from 'uuid';
 import { ICoordinates, ILocation, IOpenedTips, ISignEntry } from '../types';
+import AppAlert from './AppAlert';
+import InitLoading from './InitLoading';
 import Login from './Login';
 import MapSignForm from './MapSignForm';
 import avatarImage from './res/avatar.png';
 import githubSVG from './res/github.png';
 import Sign from './Sign';
-import { initEntries, updateAddedLocation } from './store/actions';
+import { initEntries, updateAddedLocation, setAppUserInfo } from './store/actions';
 import reducers from './store/reducers';
 import Tip from './Tip';
+import cookies from 'js-cookie';
 
 const Map = () => {
   const [viewport, setViewport] = useState<Partial<ViewportProps>>({
@@ -32,7 +35,10 @@ const Map = () => {
     minZoom: 2,
   });
 
-  const [hasLogin, setLogin] = useState(false);
+  const userInfo = useSelector((state: RootStateOrAny & { login: string }) => {
+    return state.app.userInfo;
+  });
+  const { login } = userInfo;
 
   const { setVisible: setLoginModalVisiable, bindings: modalBindings } = useModal();
 
@@ -46,9 +52,16 @@ const Map = () => {
     dispatch(initEntries());
   }, [dispatch]);
 
+  const handleUserInfo = useCallback(() => {
+    const info = cookies.get('map_sign_user_info')?.slice(2);
+    const infoJson = JSON.parse(info || '{}');
+    dispatch(setAppUserInfo(infoJson));
+  }, [dispatch]);
+
   useEffect(() => {
     handleInitEntries();
-  }, [handleInitEntries]);
+    handleUserInfo();
+  }, [dispatch, handleInitEntries, handleUserInfo]);
 
   const visibleEntries: ISignEntry[] = useSelector((state: RootStateOrAny) => {
     return state.signs.entries;
@@ -69,13 +82,13 @@ const Map = () => {
 
   const handleAddEntry = useCallback(
     (e: PointerEvent) => {
-      if (hasLogin) {
+      if (!!login) {
         dispatch(updateAddedLocation(e.lngLat));
       } else {
         setLoginModalVisiable(true);
       }
     },
-    [dispatch, hasLogin, setLoginModalVisiable]
+    [dispatch, login, setLoginModalVisiable]
   );
 
   const handleDragAddEntry = useCallback(
@@ -84,10 +97,6 @@ const Map = () => {
     },
     [dispatch]
   );
-
-  const handleCloseAddEntry = useCallback(() => {
-    dispatch(updateAddedLocation(null));
-  }, [dispatch]);
 
   const handleViewportChange = useCallback((info: ContextViewStateChangeInfo) => {
     const { viewState } = info;
@@ -108,6 +117,10 @@ const Map = () => {
         onDblClick={handleAddEntry}
         attributionControl={false}
       >
+        <InitLoading />
+
+        <AppAlert />
+
         <Grid.Container justify="space-between">
           <Grid>
             <div>
@@ -127,7 +140,7 @@ const Map = () => {
             </div>
           </Grid>
           <Grid>
-            <Login isLogin={hasLogin} />
+            <Login />
           </Grid>
         </Grid.Container>
 
@@ -137,7 +150,7 @@ const Map = () => {
           <Modal.Content>
             <p>
               为保证安全性，需要使用 Github
-              账户对本站授权，本站不保存您的各种敏感信息，请放心使用。
+              账户对此应用进行授权，应用完全不保存您的信息，请放心使用。
             </p>
           </Modal.Content>
           <Modal.Action passive onClick={({ close }) => close()}>
@@ -181,7 +194,6 @@ const Map = () => {
                 title: '',
                 location: addedLocation,
               }}
-              onClose={handleCloseAddEntry}
             >
               <MapSignForm location={addedLocation} />
             </Tip>

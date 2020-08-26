@@ -1,4 +1,4 @@
-import { Card, Image, Text, Tooltip, useClipboard, useToasts } from '@zeit-ui/react';
+import { Card, Button, Image, Text, Tooltip, useClipboard } from '@zeit-ui/react';
 import { Copy } from '@zeit-ui/react-icons';
 import React, { FC, useCallback, useMemo } from 'react';
 import { Popup, PopupProps } from 'react-map-gl';
@@ -16,7 +16,6 @@ const Tip: FC<Partial<PopupProps> & ITipProps> = ({ signEntry, children, ...args
   const { location, title, _id, description, image, rating } = signEntry;
   const [longitude, latitude] = location.coordinates;
 
-  const [, setToast] = useToasts();
   const { copy } = useClipboard();
 
   const dispatch = useDispatch();
@@ -34,32 +33,34 @@ const Tip: FC<Partial<PopupProps> & ITipProps> = ({ signEntry, children, ...args
         className={styles.tip}
         longitude={longitude}
         latitude={latitude}
-        closeButton={true}
-        closeOnClick={false}
+        closeButton={false}
         anchor="top"
         captureScroll={true}
-        sortByDepth={true}
-        onClose={() => {
-          handleSetOpendTip({ [_id!]: false });
-        }}
+        tipSize={15}
         {...args}
       >
         {children || (
           <Card width="300px" shadow={false}>
-            <Card.Content style={{ width: '260px', textAlign: 'center' }}>
+            <div style={{ textAlign: 'right' }}>
+              <Button
+                size="mini"
+                type="error"
+                auto
+                onClick={(params) => {
+                  handleSetOpendTip({ [_id!]: false });
+                }}
+              >
+                X
+              </Button>
+            </div>
+            <Card.Content style={{ width: '257px', textAlign: 'center' }}>
               <Text h3>{title}</Text>
               <Text h4 type="warning">
                 <Rating num={rating || 0} />
               </Text>
-              <Image
-                src={image || ''}
-                width={200}
-                height={180}
-                alt="景点图片"
-                style={{ float: 'left' }}
-              />
+              <Image src={image || ''} width={200} height={180} alt="标记图片" />
             </Card.Content>
-            <Card.Content style={{ width: '260px' }}>
+            <Card.Content style={{ width: '257px' }}>
               <Text p small>
                 {description}
               </Text>
@@ -72,7 +73,6 @@ const Tip: FC<Partial<PopupProps> & ITipProps> = ({ signEntry, children, ...args
                   span
                   onClick={() => {
                     copy(`${longitude}, ${latitude}`);
-                    setToast({ text: '文字已拷贝。' });
                   }}
                 >
                   <Copy size={16} />
@@ -94,7 +94,6 @@ const Tip: FC<Partial<PopupProps> & ITipProps> = ({ signEntry, children, ...args
     latitude,
     longitude,
     rating,
-    setToast,
     title,
   ]);
 };

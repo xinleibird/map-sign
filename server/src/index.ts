@@ -1,14 +1,12 @@
 import cors, { CorsOptions } from 'cors';
 import express from 'express';
-import { readFileSync } from 'fs';
+import session, { SessionOptions } from 'express-session';
 import helmet from 'helmet';
-import http from 'http';
-import https from 'https';
 import morgan from 'morgan';
-import api from './api';
 import env from './env';
 import { handleErrors, notFound } from './middleware';
-import oauth from './oauth';
+import { api, oauth, db } from './routers';
+import startServer from './startServer';
 
 env();
 
@@ -19,32 +17,32 @@ const corsOptions: CorsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
 
+export const cookieOptions = {
+  secure: process.env.NODE_ENV !== 'development', // just https set this
+  maxAge: process.env.NODE_ENV === 'development' ? 1000 * 60 * 2 : 1000 * 60 * 60 * 24 * 7,
+};
+
+const sessionOptions: SessionOptions = {
+  secret: process.env.SESSION_SECRET,
+  saveUninitialized: false,
+  resave: true,
+  cookie: cookieOptions,
+  name: 'map_sign_session',
+};
+
 // Request logs, Header security and CORS
 app.use(morgan('common')).use(helmet()).use(cors(corsOptions)).use(express.json());
 
-app.use('/api', api).use('/oauth', oauth);
+// Session
+app.use(session(sessionOptions));
+
+// For POST PUT DELETE, Verify Access, Vertify Authorization
+// app.use(handleAccess).use(handleAuth);
+
+// Router
+app.use(db).use(api).use(oauth);
 
 // 404 and Error handler
 app.use(notFound).use(handleErrors);
 
-if (process.env.NODE_ENV === 'development') {
-  const httpServer = http.createServer(app);
-  const port = process.env.HTTP_PORT;
-  httpServer.listen(port, () => {
-    console.log(`Server has been started at http://localhost:${port}`);
-  });
-} else {
-  const key = readFileSync(process.env.KEY_PATH, 'utf8');
-  const cert = readFileSync(process.env.CERT_PATH, 'utf8');
-  const ca = readFileSync(process.env.CHAIN_PATH, 'utf8');
-  const credentials = {
-    key,
-    cert,
-    ca,
-  };
-  const httpsServer = https.createServer(credentials, app);
-  const port = process.env.HTTPS_PORT;
-  httpsServer.listen(port, () => {
-    console.log(`Server has been started at https://localhost:${port}`);
-  });
-}
+startServer(app);

@@ -32,7 +32,7 @@ export const signs = (
     case ACTION_TYPE.SET_OPENED_TIP:
       return {
         entries: state.entries,
-        openedTips: { ...state.openedTips, ...action.openedTipState },
+        openedTips: { ...action.openedTipState },
         addedCoordinates: state.addedCoordinates,
       };
 
@@ -55,4 +55,40 @@ export const signs = (
   }
 };
 
-export default combineReducers({ signs });
+interface IUserInfo {
+  login: string;
+  avatar_url: string;
+  name: string;
+  html_url: string;
+}
+
+interface IAppState {
+  isLoading: boolean;
+  alert: string;
+  userInfo: IUserInfo;
+}
+
+export const app = (
+  state: IAppState = {
+    isLoading: true,
+    alert: '',
+    userInfo: { login: '', avatar_url: '', name: '', html_url: '' },
+  },
+  action: Action & { isLoading: boolean; alert: string; userInfo: IUserInfo }
+) => {
+  switch (action.type) {
+    case ACTION_TYPE.SET_APP_INIT_LOADING:
+      return { isLoading: action.isLoading, alert: state.alert, userInfo: state.userInfo };
+
+    case ACTION_TYPE.SET_APP_ALERT:
+      return { isLoading: state.isLoading, alert: action.alert, userInfo: state.userInfo };
+
+    case ACTION_TYPE.SET_APP_USER_INFO:
+      return { isLoading: state.isLoading, alert: action.alert, userInfo: action.userInfo };
+
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({ app, signs });
