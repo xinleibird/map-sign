@@ -40,7 +40,7 @@ router.get('/redirect', async (req, res, next) => {
     next(error);
   }
 
-  res.redirect('http://localhost:3000');
+  res.redirect(process.env.SITE_URL);
 });
 
 export default router;
