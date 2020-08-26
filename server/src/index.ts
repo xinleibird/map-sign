@@ -20,6 +20,7 @@ const corsOptions: CorsOptions = {
 export const cookieOptions = {
   secure: process.env.NODE_ENV !== 'development', // just https set this
   maxAge: process.env.NODE_ENV === 'development' ? 1000 * 60 * 2 : 1000 * 60 * 60 * 24 * 7,
+  domain: process.env.COOKIE_DOMAIN,
 };
 
 const sessionOptions: SessionOptions = {
