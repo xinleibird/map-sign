@@ -56,8 +56,6 @@ const Map = () => {
     const info = cookies.get('map_sign_user_info')?.slice(2);
     const infoJson = JSON.parse(info || '{}');
     dispatch(setAppUserInfo(infoJson));
-    console.log(info);
-    console.log(infoJson);
   }, [dispatch]);
 
   useEffect(() => {
