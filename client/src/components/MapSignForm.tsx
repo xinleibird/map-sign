@@ -3,8 +3,6 @@ import React, { FC, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { ISignEntry } from '../types';
-import styles from './Map.module.css';
-import placeholder from './res/placeholder.png';
 import { addEntry, updateAddedLocation } from './store/actions';
 
 const MapSignForm: FC<Partial<ISignEntry> & { editing?: boolean }> = ({
@@ -20,15 +18,14 @@ const MapSignForm: FC<Partial<ISignEntry> & { editing?: boolean }> = ({
 
   return (
     <form
-      className={styles.entryForm}
       onSubmit={handleSubmit((value) => {
-        const fromForm = value as ISignEntry;
-        const { image } = fromForm;
+        const formValue = value as ISignEntry;
+        const { image } = formValue;
 
-        let entry = { ...fromForm, location };
+        let entry = { ...formValue, location };
 
         if (!image) {
-          entry = { ...entry, image: placeholder };
+          entry = { ...entry, image: '' };
         }
         dispatch(addEntry(entry));
         dispatch(updateAddedLocation(null));
@@ -115,11 +112,11 @@ const MapSignForm: FC<Partial<ISignEntry> & { editing?: boolean }> = ({
           </Text>
         </Card.Content>
         <Card.Footer>
-          <Button htmlType="submit" auto type="success" style={{ width: '50%' }}>
-            添加
-          </Button>
           <Button htmlType="reset" auto type="warning" style={{ width: '50%' }}>
             重置
+          </Button>
+          <Button htmlType="submit" auto type="success" style={{ width: '50%' }}>
+            添加
           </Button>
         </Card.Footer>
         <Card.Footer>

@@ -13,6 +13,7 @@ import { Provider, RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { v5 as uuid } from 'uuid';
+import { getCurrentUser } from '../api';
 import { ICoordinates, ILocation, IOpenedTips, ISignEntry } from '../types';
 import AppAlert from './AppAlert';
 import InitLoading from './InitLoading';
@@ -21,10 +22,9 @@ import MapSignForm from './MapSignForm';
 import avatarImage from './res/avatar.png';
 import githubSVG from './res/github.png';
 import Sign from './Sign';
-import { initEntries, updateAddedLocation, setAppUserInfo } from './store/actions';
+import { initEntries, setAppUserInfo, updateAddedLocation } from './store/actions';
 import reducers from './store/reducers';
 import Tip from './Tip';
-import cookies from 'js-cookie';
 
 const Map = () => {
   const [viewport, setViewport] = useState<Partial<ViewportProps>>({
@@ -53,9 +53,10 @@ const Map = () => {
   }, [dispatch]);
 
   const handleUserInfo = useCallback(() => {
-    const info = cookies.get('map_sign_user_info')?.slice(2);
-    const infoJson = JSON.parse(info || '{}');
-    dispatch(setAppUserInfo(infoJson));
+    (async () => {
+      const info = await getCurrentUser();
+      dispatch(setAppUserInfo(info));
+    })();
   }, [dispatch]);
 
   useEffect(() => {

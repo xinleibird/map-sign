@@ -18,6 +18,7 @@ export const addMapSignToDB = async (param: ISignEntry) => {
       headers: {
         'content-type': 'application/json',
       },
+      credentials: 'include',
     });
     return res.json();
   } catch (error) {
@@ -33,5 +34,17 @@ export const getAtlas = async () => {
     return atlas.json();
   } catch (error) {
     console.error(error.message);
+  }
+};
+
+export const getCurrentUser = async () => {
+  try {
+    const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/oauth/signin`, {
+      credentials: 'include',
+    });
+    return res.json();
+  } catch (error) {
+    console.error(error.message);
+    return { message: 'error' };
   }
 };

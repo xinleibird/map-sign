@@ -1,13 +1,10 @@
 import axios from 'axios';
-import { Router } from 'express';
-import { cookieOptions } from '../../index';
+import { Request, Response, NextFunction, Router } from 'express';
 import env from '../../env';
 
 env();
 
-const router = Router();
-
-router.get('/redirect', async (req, res, next) => {
+const redirect = async (req: Request, res: Response, next: NextFunction) => {
   const requestToken = req.query.code;
   const githubAccessURL = 'https://github.com/login/oauth/access_token';
   const responseToken = await axios({
@@ -34,13 +31,15 @@ router.get('/redirect', async (req, res, next) => {
 
     const { login, avatar_url, name, html_url } = result.data;
     const userInfo = { login, avatar_url, name, html_url };
+    if (!req.session.map_sign_user_info) {
+      req.session.map_sign_user_info = {};
+    }
     req.session.map_sign_user_info = userInfo;
-    res.cookie('map_sign_user_info', userInfo, cookieOptions);
   } catch (error) {
     next(error);
   }
 
   res.redirect(process.env.SITE_URL);
-});
+};
 
-export default router;
+export default redirect;

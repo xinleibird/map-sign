@@ -3,7 +3,6 @@ import React, { FC, useCallback, useMemo } from 'react';
 import { Marker, MarkerProps } from 'react-map-gl';
 import { useDispatch } from 'react-redux';
 import { ISignEntry } from '../types';
-import styles from './Map.module.css';
 import { setOpenedTip } from './store/actions';
 
 interface ISignProps {
@@ -43,7 +42,7 @@ const Sign: FC<Partial<MarkerProps> & ISignProps> = ({
         offsetTop={-zoom * 2}
         {...args}
       >
-        <div className={styles.sign} onClick={handleSetOpendTip({ [_id!]: true })}>
+        <div style={{ cursor: 'pointer' }} onClick={handleSetOpendTip({ [_id!]: true })}>
           <MapPin color={color} size={size} />
         </div>
       </Marker>

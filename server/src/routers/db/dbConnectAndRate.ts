@@ -27,11 +27,15 @@ const mongoStore = new MongoStore(model);
 
 const readLimiter = new ExpressBrute(memoryStroe, {
   minWait: 100,
-  maxWait: 2000,
+  maxWait: 1000,
   failCallback,
 });
 
-const writeLimiter = new ExpressBrute(mongoStore, { minWait: 15000, failCallback });
+const writeLimiter = new ExpressBrute(mongoStore, {
+  minWait: 1000,
+  maxWait: 1000 * 10,
+  failCallback,
+});
 
 router.get('*', readLimiter.prevent, (req, res, next) => {
   next();

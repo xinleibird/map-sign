@@ -1,10 +1,9 @@
-import { Card, Button, Image, Text, Tooltip, useClipboard } from '@zeit-ui/react';
+import { Button, Card, Image, Text, Tooltip, useClipboard } from '@zeit-ui/react';
 import { Copy } from '@zeit-ui/react-icons';
 import React, { FC, useCallback, useMemo } from 'react';
 import { Popup, PopupProps } from 'react-map-gl';
 import { useDispatch } from 'react-redux';
 import { ISignEntry } from '../types';
-import styles from './Map.module.css';
 import Rating from './Rating';
 import { setOpenedTip } from './store/actions';
 
@@ -30,13 +29,13 @@ const Tip: FC<Partial<PopupProps> & ITipProps> = ({ signEntry, children, ...args
   return useMemo(() => {
     return (
       <Popup
-        className={styles.tip}
         longitude={longitude}
         latitude={latitude}
         closeButton={false}
         anchor="top"
         captureScroll={true}
         tipSize={15}
+        sortByDepth={true}
         {...args}
       >
         {children || (
@@ -58,7 +57,7 @@ const Tip: FC<Partial<PopupProps> & ITipProps> = ({ signEntry, children, ...args
               <Text h4 type="warning">
                 <Rating num={rating || 0} />
               </Text>
-              <Image src={image || ''} width={200} height={180} alt="标记图片" />
+              <Image src={image || ''} width={200} height={180} />
             </Card.Content>
             <Card.Content style={{ width: '257px' }}>
               <Text p small>
