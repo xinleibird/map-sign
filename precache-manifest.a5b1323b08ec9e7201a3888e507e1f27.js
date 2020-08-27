@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "eaa2cb499fd014d94b7ef68a0847337f",
+    "revision": "4ef9a5035e162136605a8aea5e77c9f4",
     "url": "/map-sign/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/map-sign/static/css/2.632c9957.chunk.css"
   },
   {
-    "revision": "0459a43f66e838654dde",
+    "revision": "988d2400ebaa5cd640f7",
     "url": "/map-sign/static/css/main.df6d4e3e.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/map-sign/static/js/2.df280409.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "0459a43f66e838654dde",
-    "url": "/map-sign/static/js/main.feda3e3c.chunk.js"
+    "revision": "988d2400ebaa5cd640f7",
+    "url": "/map-sign/static/js/main.f5a1ba7b.chunk.js"
   },
   {
     "revision": "82c0a53523ae0f7d6cc7",
