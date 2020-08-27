@@ -7,7 +7,7 @@ env();
 export const cookieOptions: CookieOptions = {
   secure: process.env.NODE_ENV !== 'development', // just https set this
   maxAge: process.env.NODE_ENV === 'development' ? 1000 * 60 * 2 : 1000 * 60 * 60 * 24 * 7,
-  sameSite: 'none',
+  sameSite: process.env.NODE_ENV === 'development' ? false : 'none',
 };
 
 const sessionOptions: SessionOptions = {

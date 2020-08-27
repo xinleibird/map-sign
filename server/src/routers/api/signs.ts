@@ -83,7 +83,7 @@ router.get('/signs', async (req, res, next) => {
 
 router.post('/signs', async (req, res, next) => {
   try {
-    const mapSign = new MapSign(req.body);
+    const mapSign = new MapSign({ ...req.body, owner: req.session.map_sign_user_info });
 
     res.status(202);
     const createdEntry = await mapSign.save();

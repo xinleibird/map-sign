@@ -20,13 +20,18 @@ const MapSignForm: FC<Partial<ISignEntry> & { editing?: boolean }> = ({
     <form
       onSubmit={handleSubmit((value) => {
         const formValue = value as ISignEntry;
-        const { image } = formValue;
+        const { image, rating } = formValue;
 
         let entry = { ...formValue, location };
 
         if (!image) {
           entry = { ...entry, image: '' };
         }
+
+        if (!rating) {
+          entry = { ...entry, rating: 1 };
+        }
+
         dispatch(addEntry(entry));
         dispatch(updateAddedLocation(null));
       })}
@@ -67,6 +72,7 @@ const MapSignForm: FC<Partial<ISignEntry> & { editing?: boolean }> = ({
             width="100%"
             clearable
             placeholder="级别"
+            defaultValue={1}
             name="rating"
             ref={register({
               pattern: {

@@ -9,6 +9,12 @@ export interface ISignEntry {
     type: 'Point';
     coordinates: [number, number];
   };
+  owner: {
+    login: string;
+    avatar_url: string;
+    name: string;
+    html_url: string;
+  };
 }
 
 const SignEntry = new Schema(
@@ -27,7 +33,7 @@ const SignEntry = new Schema(
       type: Number,
       min: 1,
       max: 5,
-      default: 0,
+      default: 1,
     },
     location: {
       type: {
@@ -57,6 +63,24 @@ const SignEntry = new Schema(
           },
           '{PATH} Array length must be 2, Longitude and Latitude.',
         ],
+      },
+    },
+    owner: {
+      login: {
+        type: String,
+        required: true,
+      },
+      avatar_url: {
+        type: String,
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      html_url: {
+        type: String,
+        required: true,
       },
     },
   },

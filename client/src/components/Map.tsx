@@ -14,7 +14,7 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { v5 as uuid } from 'uuid';
 import { getCurrentUser } from '../api';
-import { ICoordinates, ILocation, IOpenedTips, ISignEntry } from '../types';
+import { ICoordinates, ILocation, IOpenedTips, ISignEntry, IOwner } from '../types';
 import AppAlert from './AppAlert';
 import InitLoading from './InitLoading';
 import Login from './Login';
@@ -38,7 +38,7 @@ const Map = () => {
   const userInfo = useSelector((state: RootStateOrAny & { login: string }) => {
     return state.app.userInfo;
   });
-  const { login } = userInfo;
+  const { login } = userInfo as IOwner;
 
   const { setVisible: setLoginModalVisiable, bindings: modalBindings } = useModal();
 
@@ -194,6 +194,7 @@ const Map = () => {
               signEntry={{
                 title: '',
                 location: addedLocation,
+                owner: userInfo,
               }}
             >
               <MapSignForm location={addedLocation} />

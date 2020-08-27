@@ -1,9 +1,18 @@
-import { Button, Card, Image, Text, Tooltip, useClipboard } from '@zeit-ui/react';
+import {
+  Avatar,
+  Button,
+  Card,
+  Image,
+  Link,
+  Text,
+  Tooltip,
+  useClipboard,
+} from '@zeit-ui/react';
 import { Copy } from '@zeit-ui/react-icons';
 import React, { FC, useCallback, useMemo } from 'react';
 import { Popup, PopupProps } from 'react-map-gl';
 import { useDispatch } from 'react-redux';
-import { ISignEntry } from '../types';
+import { IOwner, ISignEntry } from '../types';
 import Rating from './Rating';
 import { setOpenedTip } from './store/actions';
 
@@ -12,8 +21,9 @@ interface ITipProps {
 }
 
 const Tip: FC<Partial<PopupProps> & ITipProps> = ({ signEntry, children, ...args }) => {
-  const { location, title, _id, description, image, rating } = signEntry;
+  const { location, title, _id, description, image, rating, owner } = signEntry;
   const [longitude, latitude] = location.coordinates;
+  const { avatar_url, html_url, name } = owner as IOwner;
 
   const { copy } = useClipboard();
 
@@ -53,7 +63,18 @@ const Tip: FC<Partial<PopupProps> & ITipProps> = ({ signEntry, children, ...args
               </Button>
             </div>
             <Card.Content style={{ width: '257px', textAlign: 'center' }}>
-              <Text h3>{title}</Text>
+              <Text h3>
+                <Link
+                  href={html_url}
+                  style={{ position: 'absolute', top: '100px', left: '96px' }}
+                >
+                  <Tooltip text={name}>
+                    <Avatar src={avatar_url} size="small" />
+                  </Tooltip>
+                </Link>
+                {title}
+              </Text>
+
               <Text h4 type="warning">
                 <Rating num={rating || 0} />
               </Text>
@@ -85,13 +106,16 @@ const Tip: FC<Partial<PopupProps> & ITipProps> = ({ signEntry, children, ...args
   }, [
     _id,
     args,
+    avatar_url,
     children,
     copy,
     description,
     handleSetOpendTip,
+    html_url,
     image,
     latitude,
     longitude,
+    name,
     rating,
     title,
   ]);

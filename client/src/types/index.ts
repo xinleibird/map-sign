@@ -12,6 +12,13 @@ export interface ILocation {
   coordinates: ICoordinates;
 }
 
+export interface IOwner {
+  login: string;
+  avatar_url: string;
+  name: string;
+  html_url: string;
+}
+
 export interface ISignEntry {
   _id?: string;
   title: string;
@@ -19,4 +26,5 @@ export interface ISignEntry {
   image?: string;
   rating?: number;
   location: ILocation;
+  owner?: IOwner;
 }
