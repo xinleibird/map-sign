@@ -1,10 +1,7 @@
-import { Router, Request } from 'express';
-import ExpressBrute, { MemoryStore } from 'express-brute';
-import mongoose from 'mongoose';
-import env from '../../env';
+import { Request, Router } from 'express';
+import ExpressBrute from 'express-brute';
 import RedisStore from 'express-brute-redis';
-
-env();
+import mongoose from 'mongoose';
 
 const router = Router();
 

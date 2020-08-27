@@ -1,8 +1,5 @@
 import axios from 'axios';
-import { Request, Response, NextFunction, Router } from 'express';
-import env from '../../env';
-
-env();
+import { NextFunction, Request, Response } from 'express';
 
 const redirect = async (req: Request, res: Response, next: NextFunction) => {
   const requestToken = req.query.code;

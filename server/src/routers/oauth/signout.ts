@@ -1,7 +1,4 @@
-import env from '../../env';
-import { Request, Response, NextFunction } from 'express';
-
-env();
+import { NextFunction, Request, Response } from 'express';
 
 const signout = (req: Request, res: Response, next: NextFunction) => {
   const userInfo = req.session.map_sign_user_info;

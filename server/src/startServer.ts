@@ -1,10 +1,7 @@
+import { Application } from 'express';
+import { readFileSync } from 'fs';
 import http from 'http';
 import https from 'https';
-import { readFileSync } from 'fs';
-import { Application } from 'express';
-import env from './env';
-
-env();
 
 const startServer = (app: Application) => {
   if (process.env.NODE_ENV === 'development') {

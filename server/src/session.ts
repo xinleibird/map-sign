@@ -1,10 +1,7 @@
-import session, { SessionOptions, MemoryStore } from 'express-session';
-import { CookieOptions } from 'express';
 import connect from 'connect-redis';
+import { CookieOptions } from 'express';
+import session, { SessionOptions } from 'express-session';
 import redis from 'redis';
-import env from './env';
-
-env();
 
 const RedisStore = connect(session);
 const redisClient = redis.createClient();
