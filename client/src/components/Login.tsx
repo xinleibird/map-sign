@@ -68,14 +68,12 @@ const Login = () => {
         >
           <Card>
             <User src={userSVG} name="请先登录">
-              <Link>
-                进行验证
-                <img
-                  src={githubPng}
-                  alt="github"
-                  style={{ width: '12px', marginLeft: '10px' }}
-                />
-              </Link>
+              进行验证
+              <img
+                src={githubPng}
+                alt="github"
+                style={{ width: '12px', marginLeft: '10px' }}
+              />
             </User>
           </Card>
         </Link>

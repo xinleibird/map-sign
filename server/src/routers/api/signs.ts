@@ -1,8 +1,5 @@
 import { Router } from 'express';
-import env from '../../env';
 import { MapSign } from '../../models/SignEntry';
-
-env();
 
 const router = Router();
 

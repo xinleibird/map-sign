@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 
 env();
 
-const signout = async (req: Request, res: Response, next: NextFunction) => {
+const signout = (req: Request, res: Response, next: NextFunction) => {
   const userInfo = req.session.map_sign_user_info;
 
   if (userInfo) {
@@ -14,7 +14,7 @@ const signout = async (req: Request, res: Response, next: NextFunction) => {
     });
     res.redirect(process.env.SITE_URL);
   } else {
-    next(new Error('Not Sign In yet!'));
+    next(new Error('already Sign Out'));
   }
 };
 

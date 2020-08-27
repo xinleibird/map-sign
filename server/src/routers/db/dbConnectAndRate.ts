@@ -24,14 +24,14 @@ const redisStore = new RedisStore();
 const readLimiter = new ExpressBrute(redisStore, {
   freeRetries: 3,
   minWait: 1000,
-  maxWait: 2000,
+  maxWait: 1000,
   failCallback,
 });
 
 const writeLimiter = new ExpressBrute(redisStore, {
-  freeRetries: 1,
+  freeRetries: 2,
   minWait: 1000,
-  maxWait: 1000 * 6,
+  maxWait: 1000 * 2,
   failCallback,
 });
 
