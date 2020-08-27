@@ -66,7 +66,7 @@ const Tip: FC<Partial<PopupProps> & ITipProps> = ({ signEntry, children, ...args
               <Text h3>
                 <Link
                   href={html_url}
-                  style={{ position: 'absolute', top: '100px', left: '96px' }}
+                  style={{ position: 'absolute', top: '100px', left: '88px' }}
                 >
                   <Tooltip text={name}>
                     <Avatar src={avatar_url} size="small" />
@@ -86,8 +86,9 @@ const Tip: FC<Partial<PopupProps> & ITipProps> = ({ signEntry, children, ...args
               </Text>
             </Card.Content>
             <Card.Footer>
-              <Text small span type="success">{`${longitude}`}</Text>
-              <Text small span type="warning">{`${latitude}`}</Text>
+              <Text size={11} span type="success">{`${longitude}`}</Text>
+              <span> - </span>
+              <Text size={11} span type="warning">{`${latitude}`}</Text>
               <Tooltip leaveDelay={100} text={'已拷贝'} trigger="click" type="dark">
                 <Text
                   span
