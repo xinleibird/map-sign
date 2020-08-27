@@ -1,9 +1,8 @@
 import { Router, Request } from 'express';
 import ExpressBrute, { MemoryStore } from 'express-brute';
-import MongoStore from 'express-brute-mongoose';
-import BruteForceSchema from 'express-brute-mongoose/dist/schema';
 import mongoose from 'mongoose';
 import env from '../../env';
+import RedisStore from 'express-brute-redis';
 
 env();
 
@@ -20,20 +19,19 @@ const failCallback = (req: Request, res, next, nextData) => {
   next(new Error('too many request'));
 };
 
-const model = mongoose.model('bruteforce', new mongoose.Schema(BruteForceSchema));
+const redisStore = new RedisStore();
 
-const memoryStroe = new MemoryStore();
-const mongoStore = new MongoStore(model);
-
-const readLimiter = new ExpressBrute(memoryStroe, {
-  minWait: 100,
-  maxWait: 1000,
+const readLimiter = new ExpressBrute(redisStore, {
+  freeRetries: 3,
+  minWait: 1000,
+  maxWait: 2000,
   failCallback,
 });
 
-const writeLimiter = new ExpressBrute(mongoStore, {
+const writeLimiter = new ExpressBrute(redisStore, {
+  freeRetries: 1,
   minWait: 1000,
-  maxWait: 1000 * 10,
+  maxWait: 1000 * 6,
   failCallback,
 });
 
