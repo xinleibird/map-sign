@@ -2,7 +2,9 @@ import { ISignEntry } from '../types';
 
 export const listMapSignsFromDB = async () => {
   try {
-    const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/signs`);
+    const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/signs`, {
+      credentials: 'include',
+    });
     return res.json();
   } catch (error) {
     console.error(error.message);
