@@ -18,9 +18,9 @@ export const initEntries = () => {
   return async (dispatch: Dispatch) => {
     const res = await listMapSignsFromDB();
 
-    if (res.message === 'ok') {
-      const { result } = res;
-      dispatch({ type: ACTION_TYPE.INIT_ENTRIES, entries: result, initFinish: true });
+    if (res.message === 'success') {
+      const { data } = res;
+      dispatch({ type: ACTION_TYPE.INIT_ENTRIES, entries: data, initFinish: true });
       dispatch({ type: ACTION_TYPE.SET_APP_INIT_LOADING, isLoading: false });
     } else if (res.message === 'too many request') {
       dispatch({ type: ACTION_TYPE.SET_APP_ALERT, alert: '页面刷新太频繁了！请稍后重试' });
@@ -34,9 +34,9 @@ export const addEntry = (sign: ISignEntry) => {
   return async (dispatch: Dispatch) => {
     const res = await addMapSignToDB(sign);
 
-    if (res.message === 'ok') {
-      const { result } = res;
-      dispatch({ type: ACTION_TYPE.ADD_ENTRY, entry: result });
+    if (res.message === 'success') {
+      const { data } = res;
+      dispatch({ type: ACTION_TYPE.ADD_ENTRY, entry: data });
     } else {
       console.error(res.message);
     }

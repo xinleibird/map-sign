@@ -9,8 +9,8 @@ router.get('/signs/:id', async (req, res, next) => {
     const sign = await MapSign.findOne({ _id: req.params.id });
     res.status(200);
     res.json({
-      message: 'ok',
-      result: sign,
+      message: 'success',
+      data: sign,
     });
   } catch (error) {
     if (error.name === 'CastError') {
@@ -27,8 +27,8 @@ router.put('/signs/:id', async (req, res, next) => {
     const sign = await MapSign.findOneAndUpdate({ _id: req.params.id }, req.body);
     res.status(200);
     res.json({
-      message: 'ok',
-      result: sign,
+      message: 'success',
+      data: sign,
     });
   } catch (error) {
     console.log(error.name);
@@ -46,8 +46,8 @@ router.delete('/signs/:id', async (req, res, next) => {
     const sign = await MapSign.findOneAndDelete({ _id: req.params.id });
     res.status(204);
     res.json({
-      message: 'ok',
-      result: sign,
+      message: 'success',
+      data: sign,
     });
   } catch (error) {
     console.log(error.name);
@@ -69,8 +69,8 @@ router.get('/signs', async (req, res, next) => {
     const signs = await MapSign.find();
     res.status(200);
     res.json({
-      message: 'ok',
-      result: signs,
+      message: 'success',
+      data: signs,
     });
   } catch (error) {
     res.status(403);
@@ -86,8 +86,8 @@ router.post('/signs', async (req, res, next) => {
     const createdEntry = await mapSign.save();
     res.status(201);
     res.json({
-      message: 'ok',
-      result: createdEntry,
+      message: 'success',
+      data: createdEntry,
     });
   } catch (error) {
     console.log(error.name);

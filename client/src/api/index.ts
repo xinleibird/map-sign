@@ -8,7 +8,7 @@ export const listMapSignsFromDB = async () => {
     return res.json();
   } catch (error) {
     console.error(error.message);
-    return { message: 'error' };
+    return { message: error.message, stack: error.stack };
   }
 };
 
@@ -25,17 +25,7 @@ export const addMapSignToDB = async (param: ISignEntry) => {
     return res.json();
   } catch (error) {
     console.error(error.message);
-    return { message: 'error' };
-  }
-};
-
-export const getAtlas = async () => {
-  try {
-    const atlas = await fetch('https://geo.datav.aliyun.com/areas_v2/bound/450000.json');
-
-    return atlas.json();
-  } catch (error) {
-    console.error(error.message);
+    return { message: error.message, stack: error.stack };
   }
 };
 
@@ -47,6 +37,6 @@ export const getCurrentUser = async () => {
     return res.json();
   } catch (error) {
     console.error(error.message);
-    return { message: 'error' };
+    return { message: error.message, stack: error.stack };
   }
 };
