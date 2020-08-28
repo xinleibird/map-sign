@@ -1,7 +1,9 @@
 import axios from 'axios';
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 
-const redirect = async (req: Request, res: Response, next: NextFunction) => {
+const router = Router();
+
+router.use('/redirect', async (req: Request, res: Response, next: NextFunction) => {
   const requestToken = req.query.code;
   const githubAccessURL = 'https://github.com/login/oauth/access_token';
   const responseToken = await axios({
@@ -37,6 +39,28 @@ const redirect = async (req: Request, res: Response, next: NextFunction) => {
   }
 
   res.redirect(process.env.SITE_URL);
-};
+});
 
-export default redirect;
+router.use('/signin', (req: Request, res: Response, next: NextFunction) => {
+  const userInfo = req.session.map_sign_user_info;
+
+  if (userInfo) {
+    res.json(userInfo);
+  } else {
+    next(new Error('Need Sign In to edit signs'));
+  }
+});
+
+router.use('/signout', (req: Request, res: Response, next: NextFunction) => {
+  const userInfo = req.session.map_sign_user_info;
+
+  req.session.destroy((error: Error) => {
+    if (error) {
+      next(error);
+    }
+  });
+  res.status(302);
+  res.redirect(process.env.SITE_URL);
+});
+
+export default router;

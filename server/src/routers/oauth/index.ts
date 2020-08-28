@@ -1,13 +1,8 @@
 import { Router } from 'express';
-import redirect from './redirect';
-import signin from './signin';
-import signout from './signout';
+import authentication from './authentication';
 
 const router = Router();
 
-router
-  .use('/oauth/redirect', redirect)
-  .use('/oauth/signin', signin)
-  .use('/oauth/signout', signout);
+router.use('/oauth', authentication);
 
 export default router;

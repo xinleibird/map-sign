@@ -2,8 +2,8 @@ import cors, { CorsOptions } from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import { handleAccess, handleErrors, handleNotFound } from './middleware';
-import { api, db, oauth } from './routers';
+import { handleAccess, handleErrors, handleNotFound, db } from './middleware';
+import { api, oauth } from './routers';
 import session from './session';
 import startServer from './startServer';
 
