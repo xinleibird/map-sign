@@ -1,6 +1,6 @@
-import React, { useMemo, useCallback } from 'react';
 import { Modal } from '@zeit-ui/react';
-import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
+import React, { useCallback, useMemo } from 'react';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { setAppAlert } from './store/actions';
 
 const AppAlert = () => {

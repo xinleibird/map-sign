@@ -11,7 +11,7 @@ const signout = (req: Request, res: Response, next: NextFunction) => {
     });
     res.redirect(process.env.SITE_URL);
   } else {
-    next(new Error('already Sign Out'));
+    next(new Error('Already Sign Out'));
   }
 };
 

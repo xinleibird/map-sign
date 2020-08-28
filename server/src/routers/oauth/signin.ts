@@ -6,7 +6,7 @@ const signin = (req: Request, res: Response, next: NextFunction) => {
   if (userInfo) {
     res.json(userInfo);
   } else {
-    next(new Error('already Sign In'));
+    next(new Error('Need Sign In'));
   }
 };
 
