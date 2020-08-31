@@ -112,8 +112,6 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
             auto
             style={{ width: '50%' }}
             onClick={() => {
-              console.log(signEntry);
-
               dispatch(deleteEntry(signEntry));
             }}
           >
@@ -183,7 +181,6 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
 
           if (localNew && editing) {
             entry = { ...entry, location: { type: 'Point', coordinates: addedCoordinates } };
-            console.log(entry);
 
             dispatch(addEntry(entry));
             setNew(false);

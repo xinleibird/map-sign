@@ -8,10 +8,23 @@
     <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <style>
+      body {
+        background-color: #2e2e2e;
+      }
+    </style>
     <title>MapSign</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="pre-loading" style="text-align: center; margin-top: 50px;">
+      <img src="%PUBLIC_URL%/avatar.png" style="width: 160px; height: 160px;" />
+      <br />
+      <img
+        src="%PUBLIC_URL%/load.gif"
+        style="width: 155px; height: 155px; padding-right: 10px;"
+      />
+    </div>
     <div id="root"></div>
   </body>
 </html>

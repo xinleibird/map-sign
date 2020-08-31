@@ -79,8 +79,6 @@ export const deleteEntry = (sign: ISignEntry) => {
     dispatch({ type: ACTION_TYPE.SET_APP_LOADING, isLoading: true });
     const res = await deleteMapSignToDB(sign);
 
-    console.log(res);
-
     if (res.message === 'success') {
       dispatch({ type: ACTION_TYPE.DELETE_ENTRY, entry: sign });
     } else {

@@ -65,6 +65,11 @@ const Map = () => {
     handleUserInfo();
   }, [handleInitEntries, handleUserInfo]);
 
+  useEffect(() => {
+    const preLoading = document.getElementById('pre-loading');
+    document.body.removeChild(preLoading!);
+  }, []);
+
   const addedCoordinates: ICoordinates = useSelector((state: RootStateOrAny) => {
     return state.signs.addedCoordinates;
   });
@@ -82,7 +87,7 @@ const Map = () => {
         dispatch(
           setAppAlert(`
           为保证安全性，需要使用 Github
-          账户对此应用进行授权，应用完全不保存您的信息，请放心使用。
+          账户对此应用进行授权，应用不保存您的敏感信息，请放心使用。
         `)
         );
       }
