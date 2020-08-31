@@ -1,3 +1,4 @@
+import update from 'immutability-helper';
 import { Action, combineReducers } from 'redux';
 import { ICoordinates, IOpenedTips, ISignEntry } from '../../types';
 import { ACTION_TYPE } from './actions';
@@ -43,6 +44,39 @@ export const signs = (
         addedCoordinates: state.addedCoordinates,
       };
 
+    case ACTION_TYPE.UPDATE_ENTRY: {
+      let index = 0;
+      state.entries.forEach((e, i) => {
+        if (e._id === action.entry._id) {
+          index = i;
+          return;
+        }
+      });
+      const newState = update(state, { entries: { [index]: { $set: action.entry } } });
+      return {
+        entries: newState.entries,
+        openedTips: state.openedTips,
+        addedCoordinates: state.addedCoordinates,
+      };
+    }
+
+    case ACTION_TYPE.DELETE_ENTRY: {
+      let index = 0;
+      state.entries.forEach((e, i) => {
+        if (e._id === action.entry._id) {
+          index = i;
+          return;
+        }
+      });
+
+      const newState = update(state, { entries: { $splice: [[index, 1]] } });
+      return {
+        entries: newState.entries,
+        openedTips: state.openedTips,
+        addedCoordinates: state.addedCoordinates,
+      };
+    }
+
     case ACTION_TYPE.UPDATE_ADDED_LOCATION:
       return {
         entries: state.entries,
@@ -77,7 +111,7 @@ export const app = (
   action: Action & { isLoading: boolean; alert: string; userInfo: IUserInfo }
 ) => {
   switch (action.type) {
-    case ACTION_TYPE.SET_APP_INIT_LOADING:
+    case ACTION_TYPE.SET_APP_LOADING:
       return { isLoading: action.isLoading, alert: state.alert, userInfo: state.userInfo };
 
     case ACTION_TYPE.SET_APP_ALERT:

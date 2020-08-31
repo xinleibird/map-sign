@@ -2,7 +2,7 @@ import { Loading, Page } from '@zeit-ui/react';
 import React, { FC } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 
-const InitLoading: FC = () => {
+const LoadingLabel: FC = () => {
   const isLoading = useSelector((state: RootStateOrAny) => {
     return state.app.isLoading;
   });
@@ -11,11 +11,11 @@ const InitLoading: FC = () => {
     <>
       {isLoading && (
         <Page>
-          <Loading size="large">正在加载</Loading>
+          <Loading size="large" type="warning" />
         </Page>
       )}
     </>
   );
 };
 
-export default InitLoading;
+export default LoadingLabel;

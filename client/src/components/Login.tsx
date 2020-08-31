@@ -1,10 +1,10 @@
 import { Button, Card, Link, useClickAway, User } from '@zeit-ui/react';
-import { User as UserIcon, LogOut } from '@zeit-ui/react-icons';
-import React, { useMemo, useRef, useState, useCallback } from 'react';
-import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
+import { LogOut, User as UserIcon } from '@zeit-ui/react-icons';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import githubPng from './res/github.png';
 import userSVG from './res/user.svg';
-import { setAppInitLoading } from './store/actions';
+import { setAppLoading } from './store/actions';
 
 const Login = () => {
   const [showCard, setShowCard] = useState(false);
@@ -30,11 +30,11 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const handleSignInLoading = useCallback(() => {
-    dispatch(setAppInitLoading(true));
+    dispatch(setAppLoading(true));
   }, [dispatch]);
 
   const handleSignOutLoading = useCallback(() => {
-    dispatch(setAppInitLoading(true));
+    dispatch(setAppLoading(true));
   }, [dispatch]);
 
   const { login, avatar_url, name } = userInfo;
