@@ -9,6 +9,7 @@ import { ICoordinates, IOpenedTips, ISignEntry } from '../../types';
 
 export enum ACTION_TYPE {
   INIT_ENTRIES,
+  TICK_ENTRIES,
   ADD_ENTRY,
   DELETE_ENTRY,
   UPDATE_ENTRY,

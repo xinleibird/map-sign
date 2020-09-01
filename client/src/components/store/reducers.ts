@@ -45,16 +45,14 @@ export const signs = (
       };
 
     case ACTION_TYPE.UPDATE_ENTRY: {
-      let index = 0;
-      state.entries.forEach((e, i) => {
+      const odd = state.entries.map((e) => {
         if (e._id === action.entry._id) {
-          index = i;
-          return;
+          return action.entry;
         }
+        return e;
       });
-      const newState = update(state, { entries: { [index]: { $set: action.entry } } });
       return {
-        entries: newState.entries,
+        entries: [...odd],
         openedTips: state.openedTips,
         addedCoordinates: state.addedCoordinates,
       };

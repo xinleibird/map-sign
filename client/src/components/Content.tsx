@@ -190,7 +190,7 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
             entry = { ...entry, _id };
 
             dispatch(updateEntry(entry));
-            // dispatch(updateEntry(entry));
+            dispatch(updateEntry(entry));
           }
         })}
       >
