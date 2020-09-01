@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "691b38e30e6e609747dde32a1001d55d",
+    "revision": "8dc505cb2374363d1e62366d8ba33497",
     "url": "/map-sign/index.html"
   },
   {
