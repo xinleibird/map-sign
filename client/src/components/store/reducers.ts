@@ -94,29 +94,43 @@ interface IUserInfo {
   html_url: string;
 }
 
+interface IAlertType {
+  title: string;
+  description: string;
+  active?: string;
+  action?: () => void;
+}
 interface IAppState {
   isLoading: boolean;
-  alert: string;
+  alert: IAlertType | null;
   userInfo: IUserInfo;
 }
 
 export const app = (
   state: IAppState = {
     isLoading: true,
-    alert: '',
+    alert: null,
     userInfo: { login: '', avatar_url: '', name: '', html_url: '' },
   },
-  action: Action & { isLoading: boolean; alert: string; userInfo: IUserInfo }
+  action: Action & { isLoading: boolean; alert: IAlertType; userInfo: IUserInfo }
 ) => {
   switch (action.type) {
     case ACTION_TYPE.SET_APP_LOADING:
       return { isLoading: action.isLoading, alert: state.alert, userInfo: state.userInfo };
 
     case ACTION_TYPE.SET_APP_ALERT:
-      return { isLoading: state.isLoading, alert: action.alert, userInfo: state.userInfo };
+      return {
+        isLoading: state.isLoading,
+        alert: action.alert,
+        userInfo: state.userInfo,
+      };
 
     case ACTION_TYPE.SET_APP_USER_INFO:
-      return { isLoading: state.isLoading, alert: action.alert, userInfo: action.userInfo };
+      return {
+        isLoading: state.isLoading,
+        alert: action.alert,
+        userInfo: { ...action.userInfo },
+      };
 
     default:
       return state;

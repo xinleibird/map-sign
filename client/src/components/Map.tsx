@@ -85,10 +85,14 @@ const Map = () => {
         dispatch(updateAddedLocation(e.lngLat));
       } else {
         dispatch(
-          setAppAlert(`
+          setAppAlert({
+            title: '需要登录',
+            description: `
           为保证安全性，需要使用 Github
           账户对此应用进行授权，应用不保存您的敏感信息，请放心使用。
-        `)
+        `,
+            active: '去 Github 授权登录',
+          })
         );
       }
     },

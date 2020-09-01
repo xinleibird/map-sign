@@ -33,9 +33,9 @@ const writeLimiter = new ExpressBrute(redisStore, {
   failCallback,
 });
 
-// router.get('*', readLimiter.prevent, (req, res, next) => {
-//   next();
-// });
+router.get('*', readLimiter.prevent, (req, res, next) => {
+  next();
+});
 
 router.post('*', writeLimiter.prevent, (req, res, next) => {
   next();

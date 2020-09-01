@@ -30,7 +30,17 @@ export const initEntries = () => {
       dispatch({ type: ACTION_TYPE.INIT_ENTRIES, entries: data, initFinish: true });
       dispatch({ type: ACTION_TYPE.SET_APP_LOADING, isLoading: false });
     } else if (res.message === 'too many request') {
-      dispatch({ type: ACTION_TYPE.SET_APP_ALERT, alert: '页面刷新太频繁了！请稍后重试' });
+      dispatch({
+        type: ACTION_TYPE.SET_APP_ALERT,
+        alert: {
+          title: '刷新过快',
+          description: '页面刷新太频繁了！请稍后重试',
+          active: '知道了',
+          action: () => {
+            dispatch({ type: ACTION_TYPE.SET_APP_ALERT, alert: null });
+          },
+        },
+      });
     } else {
       console.error(res.message);
     }
@@ -48,7 +58,14 @@ export const addEntry = (sign: ISignEntry) => {
     } else {
       console.error(res.message);
       if (res.message === 'Denied!') {
-        dispatch(setAppAlert('请先登录再进行操作！'));
+        dispatch({
+          type: ACTION_TYPE.SET_APP_ALERT,
+          alert: {
+            title: '需要登录',
+            description: '需要通过 Github 授权进行登录，请先登录再进行操作!',
+            active: '去 Github 进行授权',
+          },
+        });
       }
     }
     dispatch({ type: ACTION_TYPE.SET_APP_LOADING, isLoading: false });
@@ -67,7 +84,14 @@ export const updateEntry = (sign: ISignEntry) => {
     } else {
       console.error(res.message);
       if (res.message === 'Denied!') {
-        dispatch(setAppAlert('请先登录再进行操作！'));
+        dispatch({
+          type: ACTION_TYPE.SET_APP_ALERT,
+          alert: {
+            title: '需要登录',
+            description: '需要通过 Github 授权进行登录，请先登录再进行操作!',
+            active: '去 Github 进行授权',
+          },
+        });
       }
     }
     dispatch({ type: ACTION_TYPE.SET_APP_LOADING, isLoading: false });
@@ -85,7 +109,14 @@ export const deleteEntry = (sign: ISignEntry) => {
     } else {
       console.error(res.message);
       if (res.message === 'Denied!') {
-        dispatch(setAppAlert('请先登录再进行操作！'));
+        dispatch({
+          type: ACTION_TYPE.SET_APP_ALERT,
+          alert: {
+            title: '需要登录',
+            description: '需要通过 Github 授权进行登录，请先登录再进行操作!',
+            active: '去 Github 进行授权',
+          },
+        });
       }
     }
     dispatch({ type: ACTION_TYPE.SET_APP_LOADING, isLoading: false });
@@ -118,7 +149,14 @@ export const setAppLoading = (isLoading: boolean) => {
   };
 };
 
-export const setAppAlert = (alert: string) => {
+export const setAppAlert = (
+  alert: {
+    title?: string;
+    description?: string;
+    active?: string;
+    action?: () => void;
+  } | null
+) => {
   return {
     type: ACTION_TYPE.SET_APP_ALERT,
     alert,

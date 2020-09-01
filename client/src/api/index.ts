@@ -57,7 +57,7 @@ export const deleteMapSignToDB = async (entry: ISignEntry) => {
       credentials: 'include',
     });
 
-    const code = await res.status;
+    const code = res.status;
 
     if (code === 204) {
       return { message: 'success' };

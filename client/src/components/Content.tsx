@@ -16,9 +16,9 @@ import React, {
   FC,
   PropsWithChildren,
   useCallback,
+  useEffect,
   useMemo,
   useState,
-  useEffect,
 } from 'react';
 import { useForm } from 'react-hook-form';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
@@ -27,10 +27,11 @@ import Rating from './Rating';
 import {
   addEntry,
   deleteEntry,
+  initEntries,
   setOpenedTip,
   updateAddedLocation,
   updateEntry,
-  initEntries,
+  setAppAlert,
 } from './store/actions';
 
 interface IContentProps {
@@ -45,7 +46,7 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
 }) => {
   const { location, title, _id, description, image, rating, owner } = signEntry;
   const [longitude, latitude] = location.coordinates;
-  const { avatar_url, html_url, name } = owner as IOwner;
+  const { avatar_url, html_url, name, login } = owner as IOwner;
   const { copy } = useClipboard();
   const dispatch = useDispatch();
 
@@ -61,6 +62,10 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
 
   const isLoading = useSelector((state: RootStateOrAny) => {
     return state.app.isLoading;
+  });
+
+  const userInfo = useSelector((state: RootStateOrAny) => {
+    return state.app.userInfo;
   });
 
   const signShow = useMemo(() => {
@@ -120,8 +125,19 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
             auto
             style={{ width: '50%' }}
             onClick={() => {
-              dispatch(deleteEntry(signEntry));
+              dispatch(
+                setAppAlert({
+                  title: '正在删除标记',
+                  description: '您正在删除标记，请确认。此操作不可逆！',
+                  active: '确认删除',
+                  action: () => {
+                    dispatch(deleteEntry(signEntry));
+                    dispatch(setAppAlert(null));
+                  },
+                })
+              );
             }}
+            disabled={userInfo.login !== login}
           >
             删除
           </Button>
@@ -132,6 +148,7 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
             onClick={() => {
               setEditing(true);
             }}
+            disabled={userInfo.login !== login}
           >
             编辑
           </Button>
@@ -149,11 +166,13 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
     image,
     isLoading,
     latitude,
+    login,
     longitude,
     name,
     rating,
     signEntry,
     title,
+    userInfo.login,
   ]);
 
   const { handleSubmit, register, errors } = useForm({ mode: 'onChange' });
@@ -262,8 +281,8 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
               name="image"
               ref={register({
                 pattern: {
-                  value: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/,
-                  message: '无效的 URL',
+                  value: /https:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/,
+                  message: '仅接受 https 协议的 URL',
                 },
               })}
               initialValue={image}

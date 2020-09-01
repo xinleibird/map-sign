@@ -10,32 +10,30 @@ const AppAlert = () => {
 
   const dispatch = useDispatch();
 
-  const handleClick = useCallback(
+  const handlePassive = useCallback(
     ({ close }) => {
-      dispatch(setAppAlert(''));
+      dispatch(setAppAlert(null));
       close();
     },
     [dispatch]
   );
+  const handleActive = useCallback(({ close }) => {
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_OAUTH_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_SERVER_URL}/oauth/redirect`;
+  }, []);
 
   return useMemo(() => {
     return (
       <Modal open={!!alert}>
         <Modal.Title>注意</Modal.Title>
-        <Modal.Subtitle>{alert}</Modal.Subtitle>
-        <Modal.Action onClick={handleClick} passive>
-          放弃使用
+        <Modal.Subtitle>{alert?.title}</Modal.Subtitle>
+        <Modal.Content>{alert?.description}</Modal.Content>
+        <Modal.Action onClick={handlePassive} passive>
+          取消
         </Modal.Action>
-        <Modal.Action
-          onClick={() => {
-            window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_OAUTH_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_SERVER_URL}/oauth/redirect`;
-          }}
-        >
-          去 Github 授权
-        </Modal.Action>
+        <Modal.Action onClick={alert?.action || handleActive}>{alert?.active}</Modal.Action>
       </Modal>
     );
-  }, [alert, handleClick]);
+  }, [alert, handleActive, handlePassive]);
 };
 
 export default AppAlert;
