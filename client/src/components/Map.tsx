@@ -35,6 +35,7 @@ import {
   updateAddedLocation,
 } from './store/actions';
 import reducers from './store/reducers';
+import Prompt from './Prompt';
 
 const Map = () => {
   const [viewport, setViewport] = useState<Partial<ViewportProps>>({
@@ -135,6 +136,8 @@ const Map = () => {
         <LoadingLabel />
 
         <AppAlert />
+
+        <Prompt />
 
         <Grid.Container justify="space-between">
           <Grid>

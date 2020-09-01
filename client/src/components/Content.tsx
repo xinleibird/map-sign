@@ -133,9 +133,8 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
                   description: '您正在删除标记，此操作不可逆！确认删除吗？',
                   active: '确认删除',
                   action: async () => {
-                    await dispatch(deleteEntry(signEntry));
-                    await dispatch(setAppAlert(null));
-                    setToast({ text: '已删除标记！' });
+                    dispatch(deleteEntry(signEntry));
+                    dispatch(setAppAlert(null));
                   },
                 })
               );
@@ -196,7 +195,7 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
   const signForm = useMemo(() => {
     return (
       <form
-        onSubmit={handleSubmit(async (value) => {
+        onSubmit={handleSubmit((value) => {
           const formValue = value as ISignEntry;
           const { image, rating } = formValue;
 
@@ -217,17 +216,14 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
           if (localNew && editing) {
             entry = { ...entry, location: { type: 'Point', coordinates: addedCoordinates } };
 
-            await dispatch(addEntry(entry));
+            dispatch(addEntry(entry));
             setNew(false);
-
-            setToast({ text: '已新建标记！' });
           }
 
           if (!localNew && editing) {
             entry = { ...entry, _id };
 
-            await dispatch(updateEntry(entry));
-            setToast({ text: '已更新标记！' });
+            dispatch(updateEntry(entry));
           }
         })}
       >
@@ -363,7 +359,6 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
     owner,
     rating,
     register,
-    setToast,
     title,
   ]);
 

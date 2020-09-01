@@ -58,11 +58,8 @@ export const signs = (
     }
 
     case ACTION_TYPE.DELETE_ENTRY: {
-      const odd = state.entries.map((e) => {
-        if (e._id === action.entry._id) {
-          return action.entry;
-        }
-        return e;
+      const odd = state.entries.filter((e) => {
+        return e._id !== action.entry._id;
       });
 
       return {
@@ -101,6 +98,7 @@ interface IAppState {
   isLoading: boolean;
   alert: IAlertType | null;
   userInfo: IUserInfo;
+  prompt: string;
 }
 
 export const app = (
@@ -108,25 +106,46 @@ export const app = (
     isLoading: true,
     alert: null,
     userInfo: { login: '', avatar_url: '', name: '', html_url: '' },
+    prompt: '',
   },
-  action: Action & { isLoading: boolean; alert: IAlertType; userInfo: IUserInfo }
+  action: Action & {
+    isLoading: boolean;
+    alert: IAlertType;
+    userInfo: IUserInfo;
+    prompt: string;
+  }
 ) => {
   switch (action.type) {
     case ACTION_TYPE.SET_APP_LOADING:
-      return { isLoading: action.isLoading, alert: state.alert, userInfo: state.userInfo };
+      return {
+        isLoading: action.isLoading,
+        alert: state.alert,
+        userInfo: state.userInfo,
+        prompt: state.prompt,
+      };
 
     case ACTION_TYPE.SET_APP_ALERT:
       return {
         isLoading: state.isLoading,
         alert: action.alert,
         userInfo: state.userInfo,
+        prompt: state.prompt,
       };
 
     case ACTION_TYPE.SET_APP_USER_INFO:
       return {
         isLoading: state.isLoading,
-        alert: action.alert,
+        alert: state.alert,
         userInfo: { ...action.userInfo },
+        prompt: state.prompt,
+      };
+
+    case ACTION_TYPE.SET_APP_PROMPT:
+      return {
+        isLoading: state.isLoading,
+        alert: state.alert,
+        userInfo: state.userInfo,
+        prompt: action.prompt,
       };
 
     default:
