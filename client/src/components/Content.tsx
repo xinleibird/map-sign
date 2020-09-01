@@ -324,10 +324,10 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
           </Card.Footer>
           <Card.Footer>
             <Text span small type="success">
-              {isNew ? longitude : `${addedCoordinates[0]}`}
+              {isNew ? `${addedCoordinates[0]}` : longitude}
             </Text>
             <Text span small type="warning">
-              {isNew ? latitude : `${addedCoordinates[1]}`}
+              {isNew ? `${addedCoordinates[1]}` : latitude}
             </Text>
           </Card.Footer>
         </Card>
