@@ -227,7 +227,7 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
             entry = { ...entry, _id };
 
             await dispatch(updateEntry(entry));
-            setToast({ text: '已修改标记！' });
+            setToast({ text: '已更新标记！' });
           }
         })}
       >
@@ -331,10 +331,10 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
             </Button>
           </Card.Footer>
           <Card.Footer>
-            <Text span small type="success">
+            <Text size={11} span type="success">
               {isNew ? `${addedCoordinates[0]}` : longitude}
             </Text>
-            <Text span small type="warning">
+            <Text size={11} span type="warning">
               {isNew ? `${addedCoordinates[1]}` : latitude}
             </Text>
           </Card.Footer>
