@@ -1,5 +1,12 @@
-import { Avatar, Grid, Link, Spacer, Tooltip } from '@zeit-ui/react';
-import 'element-theme-default';
+import {
+  Avatar,
+  CssBaseline,
+  GeistProvider,
+  Grid,
+  Link,
+  Spacer,
+  Tooltip,
+} from '@geist-ui/react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactMapGL, {
@@ -184,7 +191,10 @@ const MapWrapper = () => {
   const store = createStore(reducers, applyMiddleware(thunk));
   return (
     <Provider store={store}>
-      <Map />
+      <GeistProvider>
+        <CssBaseline />
+        <Map />
+      </GeistProvider>
     </Provider>
   );
 };

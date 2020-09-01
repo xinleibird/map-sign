@@ -10,8 +10,9 @@ import {
   Textarea,
   Tooltip,
   useClipboard,
-} from '@zeit-ui/react';
-import { Copy } from '@zeit-ui/react-icons';
+  useToasts,
+} from '@geist-ui/react';
+import { Copy } from '@geist-ui/react-icons';
 import React, {
   FC,
   PropsWithChildren,
@@ -28,10 +29,10 @@ import {
   addEntry,
   deleteEntry,
   initEntries,
+  setAppAlert,
   setOpenedTip,
   updateAddedLocation,
   updateEntry,
-  setAppAlert,
 } from './store/actions';
 
 interface IContentProps {
@@ -68,6 +69,8 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
     return state.app.userInfo;
   });
 
+  const [, setToast] = useToasts();
+
   const signShow = useMemo(() => {
     return (
       <Card width="300px" shadow={false}>
@@ -83,40 +86,39 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
             X
           </Button>
         </div>
-        <Card.Content style={{ width: '257px', textAlign: 'center' }}>
-          <Text h3>
-            <Link href={html_url} style={{ position: 'absolute', top: '100px', left: '88px' }}>
-              <Tooltip text={name}>
-                <Avatar src={avatar_url} size="small" />
-              </Tooltip>
-            </Link>
+        <Card.Content>
+          <Text h4 style={{ textAlign: 'center' }}>
             {title}
           </Text>
 
-          <Text h4 type="warning">
+          <Link href={html_url}>
+            <Tooltip text={name}>
+              <Avatar src={avatar_url} size="small" />
+            </Tooltip>
+          </Link>
+
+          <Text h5 type="warning" style={{ textAlign: 'center' }}>
             <Rating num={rating || 0} />
           </Text>
-          <Image src={image || ''} width={200} height={180} />
+
+          <Image src={image || ''} width={256} height={192} />
         </Card.Content>
-        <Card.Content style={{ width: '257px' }}>
-          <Text p small>
-            {description}
-          </Text>
+        <Card.Content>
+          <Text small>{description}</Text>
         </Card.Content>
         <Card.Footer>
           <Text size={11} span type="success">{`${longitude}`}</Text>
           <span> - </span>
           <Text size={11} span type="warning">{`${latitude}`}</Text>
-          <Tooltip leaveDelay={100} text={'已拷贝'} trigger="click" type="dark">
-            <Text
-              span
-              onClick={() => {
-                copy(`${longitude}, ${latitude}`);
-              }}
-            >
-              <Copy size={16} />
-            </Text>
-          </Tooltip>
+          <Text
+            span
+            onClick={() => {
+              copy(`${longitude}, ${latitude}`);
+              setToast({ text: '已拷贝!' });
+            }}
+          >
+            <Copy size={16} />
+          </Text>
         </Card.Footer>
         <Card.Footer>
           <Button
@@ -128,11 +130,12 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
               dispatch(
                 setAppAlert({
                   title: '正在删除标记',
-                  description: '您正在删除标记，请确认。此操作不可逆！',
+                  description: '您正在删除标记，此操作不可逆！确认删除吗？',
                   active: '确认删除',
-                  action: () => {
-                    dispatch(deleteEntry(signEntry));
-                    dispatch(setAppAlert(null));
+                  action: async () => {
+                    await dispatch(deleteEntry(signEntry));
+                    await dispatch(setAppAlert(null));
+                    setToast({ text: '已删除标记！' });
                   },
                 })
               );
@@ -170,6 +173,7 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
     longitude,
     name,
     rating,
+    setToast,
     signEntry,
     title,
     userInfo.login,
@@ -192,7 +196,7 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
   const signForm = useMemo(() => {
     return (
       <form
-        onSubmit={handleSubmit((value) => {
+        onSubmit={handleSubmit(async (value) => {
           const formValue = value as ISignEntry;
           const { image, rating } = formValue;
 
@@ -213,14 +217,17 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
           if (localNew && editing) {
             entry = { ...entry, location: { type: 'Point', coordinates: addedCoordinates } };
 
-            dispatch(addEntry(entry));
+            await dispatch(addEntry(entry));
             setNew(false);
+
+            setToast({ text: '已新建标记！' });
           }
 
           if (!localNew && editing) {
             entry = { ...entry, _id };
 
-            dispatch(updateEntry(entry));
+            await dispatch(updateEntry(entry));
+            setToast({ text: '已修改标记！' });
           }
         })}
       >
@@ -230,9 +237,9 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
               X
             </Button>
           </div>
-          <Card.Content style={{ width: '260px' }}>
+          <Card.Content>
             <div style={{ textAlign: 'center' }}>
-              <Text h3>{isNew ? '新建标记' : '编辑标记'}</Text>
+              <Text h4>{isNew ? '新建标记' : '编辑标记'}</Text>
             </div>
             <Input
               width="100%"
@@ -293,6 +300,7 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
             <Spacer y={1} />
             <Textarea
               width="100%"
+              rows={6}
               placeholder="描述"
               name="description"
               ref={register({
@@ -355,6 +363,7 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
     owner,
     rating,
     register,
+    setToast,
     title,
   ]);
 

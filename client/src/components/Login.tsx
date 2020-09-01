@@ -1,5 +1,5 @@
-import { Button, Card, Link, useClickAway, User } from '@zeit-ui/react';
-import { LogOut, User as UserIcon } from '@zeit-ui/react-icons';
+import { Button, Card, Link, useClickAway, User } from '@geist-ui/react';
+import { LogOut, User as UserIcon } from '@geist-ui/react-icons';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import githubPng from './res/github.png';

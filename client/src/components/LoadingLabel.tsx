@@ -1,4 +1,4 @@
-import { Loading, Page } from '@zeit-ui/react';
+import { Loading, Page } from '@geist-ui/react';
 import React, { FC } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 

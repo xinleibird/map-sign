@@ -1,4 +1,4 @@
-import { Modal } from '@zeit-ui/react';
+import { Modal } from '@geist-ui/react';
 import React, { useCallback, useMemo } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { setAppAlert } from './store/actions';
@@ -26,7 +26,9 @@ const AppAlert = () => {
       <Modal open={!!alert}>
         <Modal.Title>注意</Modal.Title>
         <Modal.Subtitle>{alert?.title}</Modal.Subtitle>
-        <Modal.Content>{alert?.description}</Modal.Content>
+        <Modal.Content>
+          <p>{alert?.description}</p>
+        </Modal.Content>
         <Modal.Action onClick={handlePassive} passive>
           取消
         </Modal.Action>

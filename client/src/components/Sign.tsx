@@ -1,4 +1,4 @@
-import { MapPin } from '@zeit-ui/react-icons';
+import { MapPin } from '@geist-ui/react-icons';
 import React, { FC, useCallback, useMemo } from 'react';
 import { Marker, MarkerProps, Popup } from 'react-map-gl';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';

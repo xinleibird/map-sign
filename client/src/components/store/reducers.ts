@@ -1,4 +1,3 @@
-import update from 'immutability-helper';
 import { Action, combineReducers } from 'redux';
 import { ICoordinates, IOpenedTips, ISignEntry } from '../../types';
 import { ACTION_TYPE } from './actions';
@@ -59,17 +58,15 @@ export const signs = (
     }
 
     case ACTION_TYPE.DELETE_ENTRY: {
-      let index = 0;
-      state.entries.forEach((e, i) => {
+      const odd = state.entries.map((e) => {
         if (e._id === action.entry._id) {
-          index = i;
-          return;
+          return action.entry;
         }
+        return e;
       });
 
-      const newState = update(state, { entries: { $splice: [[index, 1]] } });
       return {
-        entries: newState.entries,
+        entries: [...odd],
         openedTips: state.openedTips,
         addedCoordinates: state.addedCoordinates,
       };
