@@ -1,9 +1,9 @@
 import { Dispatch } from 'redux';
 import {
   addMapSignToDB,
+  deleteMapSignToDB,
   listMapSignsFromDB,
   updateMapSignToDB,
-  deleteMapSignToDB,
 } from '../../api';
 import { ICoordinates, IOpenedTips, ISignEntry } from '../../types';
 

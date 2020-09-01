@@ -12,7 +12,14 @@ import {
   useClipboard,
 } from '@zeit-ui/react';
 import { Copy } from '@zeit-ui/react-icons';
-import React, { FC, PropsWithChildren, useCallback, useMemo, useState } from 'react';
+import React, {
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useMemo,
+  useState,
+  useEffect,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { IOwner, ISignEntry } from '../types';
@@ -23,6 +30,7 @@ import {
   setOpenedTip,
   updateAddedLocation,
   updateEntry,
+  initEntries,
 } from './store/actions';
 
 interface IContentProps {
@@ -158,6 +166,10 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
     dispatch(updateAddedLocation([]));
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(initEntries());
+  }, [dispatch]);
+
   const signForm = useMemo(() => {
     return (
       <form
@@ -189,7 +201,6 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
           if (!localNew && editing) {
             entry = { ...entry, _id };
 
-            dispatch(updateEntry(entry));
             dispatch(updateEntry(entry));
           }
         })}
