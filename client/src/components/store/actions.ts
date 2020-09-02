@@ -71,7 +71,7 @@ export const addEntry = (sign: ISignEntry) => {
     }
     dispatch({ type: ACTION_TYPE.SET_APP_LOADING, isLoading: false });
     dispatch({ type: ACTION_TYPE.UPDATE_ADDED_LOCATION, coordinates: [] });
-    dispatch({ type: ACTION_TYPE.SET_APP_PROMPT, prompt: '已新建标记！' });
+    dispatch({ type: ACTION_TYPE.SET_APP_PROMPT, prompt: { text: '已新建标记！' } });
   };
 };
 
@@ -98,7 +98,7 @@ export const updateEntry = (sign: ISignEntry) => {
     }
     dispatch({ type: ACTION_TYPE.SET_APP_LOADING, isLoading: false });
     dispatch({ type: ACTION_TYPE.SET_OPENED_TIP, openedTipState: {} });
-    dispatch({ type: ACTION_TYPE.SET_APP_PROMPT, prompt: '已更新标记！' });
+    dispatch({ type: ACTION_TYPE.SET_APP_PROMPT, prompt: { text: '已更新标记！' } });
   };
 };
 
@@ -124,7 +124,7 @@ export const deleteEntry = (sign: ISignEntry) => {
     }
     dispatch({ type: ACTION_TYPE.SET_APP_LOADING, isLoading: false });
     dispatch({ type: ACTION_TYPE.SET_OPENED_TIP, openedTipState: {} });
-    dispatch({ type: ACTION_TYPE.SET_APP_PROMPT, prompt: '已删除标记！' });
+    dispatch({ type: ACTION_TYPE.SET_APP_PROMPT, prompt: { text: '已删除标记！' } });
   };
 };
 
@@ -182,6 +182,6 @@ export const setAppUserInfo = (userInfo: {
 export const setAppPrompt = (prompt: string) => {
   return {
     type: ACTION_TYPE.SET_APP_PROMPT,
-    prompt,
+    prompt: { text: prompt },
   };
 };

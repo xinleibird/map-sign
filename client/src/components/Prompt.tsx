@@ -10,7 +10,7 @@ const Prompt = () => {
 
   useEffect(() => {
     if (prompt) {
-      setToats({ text: prompt });
+      setToats({ text: prompt.text });
     }
   }, [prompt]); // eslint-disable-line
 

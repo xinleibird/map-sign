@@ -98,7 +98,7 @@ interface IAppState {
   isLoading: boolean;
   alert: IAlertType | null;
   userInfo: IUserInfo;
-  prompt: string;
+  prompt: { text: string };
 }
 
 export const app = (
@@ -106,13 +106,13 @@ export const app = (
     isLoading: true,
     alert: null,
     userInfo: { login: '', avatar_url: '', name: '', html_url: '' },
-    prompt: '',
+    prompt: { text: '' },
   },
   action: Action & {
     isLoading: boolean;
     alert: IAlertType;
     userInfo: IUserInfo;
-    prompt: string;
+    prompt: { text: string };
   }
 ) => {
   switch (action.type) {
@@ -145,7 +145,7 @@ export const app = (
         isLoading: state.isLoading,
         alert: state.alert,
         userInfo: state.userInfo,
-        prompt: action.prompt,
+        prompt: { ...action.prompt },
       };
 
     default:
