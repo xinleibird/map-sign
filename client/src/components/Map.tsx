@@ -153,7 +153,7 @@ const Map = () => {
               <Spacer y={1} />
               <Link href="https://github.com/xinleibird">
                 <Tooltip text="关于作者" placement="right">
-                  <Avatar src={`${process.env.PUBLIC_URL}/avatar.png`} size="small" />
+                  <Avatar src={`${process.env.PUBLIC_URL}/avatar.gif`} size="small" />
                 </Tooltip>
               </Link>
             </div>
