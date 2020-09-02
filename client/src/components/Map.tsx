@@ -33,6 +33,7 @@ import {
   setAppAlert,
   setAppUserInfo,
   updateAddedLocation,
+  setAppPrompt,
 } from './store/actions';
 import reducers from './store/reducers';
 import Prompt from './Prompt';
@@ -49,7 +50,7 @@ const Map = () => {
   const userInfo = useSelector((state: RootStateOrAny & { login: string }) => {
     return state.app.userInfo;
   });
-  const { login } = userInfo as IOwner;
+  const { login, name } = userInfo as IOwner;
 
   const { zoom } = viewport;
 
@@ -71,7 +72,8 @@ const Map = () => {
   useEffect(() => {
     handleInitEntries();
     handleUserInfo();
-  }, [handleInitEntries, handleUserInfo]);
+    dispatch(setAppPrompt(name && `${name}，欢迎光临 `));
+  }, [dispatch, handleInitEntries, handleUserInfo, name]);
 
   useEffect(() => {
     const preLoading = document.getElementById('pre-loading');

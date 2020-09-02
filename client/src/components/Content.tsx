@@ -101,7 +101,7 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
             <Rating num={rating || 0} />
           </Text>
 
-          <Image src={image || ''} width={256} height={192} />
+          {image && <Image src={image || ''} width={256} height={192} />}
         </Card.Content>
         <Card.Content>
           <Text small>{description}</Text>
