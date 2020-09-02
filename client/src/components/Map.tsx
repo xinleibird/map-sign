@@ -24,19 +24,18 @@ import { ICoordinates, ILocation, IOwner } from '../types';
 import AppAlert from './AppAlert';
 import LoadingLabel from './LoadingLabel';
 import Login from './Login';
-import avatarImage from './res/avatar.png';
-import githubSVG from './res/github.png';
+import Prompt from './Prompt';
+import githubPng from './res/github.png';
 import Sign from './Sign';
 import Signs from './Signs';
 import {
   initEntries,
   setAppAlert,
+  setAppPrompt,
   setAppUserInfo,
   updateAddedLocation,
-  setAppPrompt,
 } from './store/actions';
 import reducers from './store/reducers';
-import Prompt from './Prompt';
 
 const Map = () => {
   const [viewport, setViewport] = useState<Partial<ViewportProps>>({
@@ -148,13 +147,13 @@ const Map = () => {
               <Spacer y={2} />
               <Link href="https://github.com/xinleibird/map-sign">
                 <Tooltip text="欢迎推送" placement="right">
-                  <Avatar size="small" src={githubSVG} />
+                  <Avatar size="small" src={githubPng} />
                 </Tooltip>
               </Link>
               <Spacer y={1} />
               <Link href="https://github.com/xinleibird">
                 <Tooltip text="关于作者" placement="right">
-                  <Avatar src={avatarImage} size="small" />
+                  <Avatar src={`${process.env.PUBLIC_URL}/avatar.png`} size="small" />
                 </Tooltip>
               </Link>
             </div>

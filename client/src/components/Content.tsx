@@ -91,17 +91,21 @@ const Content: FC<PropsWithChildren<IContentProps>> = ({
             {title}
           </Text>
 
+          <Text h5 type="warning" style={{ textAlign: 'center' }}>
+            <Rating num={rating || 0} />
+          </Text>
+
           <Link href={html_url}>
             <Tooltip text={name}>
               <Avatar src={avatar_url} size="small" />
             </Tooltip>
           </Link>
 
-          <Text h5 type="warning" style={{ textAlign: 'center' }}>
-            <Rating num={rating || 0} />
-          </Text>
-
-          {image && <Image src={image || ''} width={256} height={192} />}
+          <Image
+            src={image || `${process.env.PUBLIC_URL}/placeholder.png`}
+            width={256}
+            height={192}
+          />
         </Card.Content>
         <Card.Content>
           <Text small>{description}</Text>
