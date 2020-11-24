@@ -38,7 +38,8 @@ router.use('/redirect', async (req: Request, res: Response, next: NextFunction) 
     next(error);
   }
 
-  res.redirect(process.env.SITE_URL);
+  const origin = `${req.headers.referer}/map-sign`
+  res.redirect(origin);
 });
 
 router.use('/signin', (req: Request, res: Response, next: NextFunction) => {
@@ -60,7 +61,9 @@ router.use('/signout', (req: Request, res: Response, next: NextFunction) => {
     }
   });
   res.status(302);
-  res.redirect(process.env.SITE_URL);
+
+  const origin = `${req.headers.referer}/map-sign`
+  res.redirect(origin);
 });
 
 export default router;
