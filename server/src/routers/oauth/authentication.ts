@@ -38,7 +38,12 @@ router.use('/redirect', async (req: Request, res: Response, next: NextFunction) 
     next(error);
   }
 
-  const origin = `${req.headers.referer}/map-sign`
+  let origin = req.headers.referer;
+
+  if (!origin.match(/map-sign$/)) {
+    origin = `${origin}/map-sign`;
+  }
+
   res.redirect(origin);
 });
 
@@ -62,7 +67,12 @@ router.use('/signout', (req: Request, res: Response, next: NextFunction) => {
   });
   res.status(302);
 
-  const origin = `${req.headers.referer}/map-sign`
+  let origin = req.headers.referer;
+
+  if (!origin.match(/map-sign$/)) {
+    origin = `${origin}/map-sign`;
+  }
+
   res.redirect(origin);
 });
 
