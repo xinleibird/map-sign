@@ -41,7 +41,7 @@ router.use('/redirect', async (req: Request, res: Response, next: NextFunction) 
   let origin = req.headers.referer;
 
   if (!origin.match(/map-sign$/)) {
-    origin = `${origin}/map-sign`;
+    origin = `${origin}map-sign`;
   }
 
   res.redirect(origin);
@@ -70,7 +70,7 @@ router.use('/signout', (req: Request, res: Response, next: NextFunction) => {
   let origin = req.headers.referer;
 
   if (!origin.match(/map-sign$/)) {
-    origin = `${origin}/map-sign`;
+    origin = `${origin}map-sign`;
   }
 
   res.redirect(origin);
